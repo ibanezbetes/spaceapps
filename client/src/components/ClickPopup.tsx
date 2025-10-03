@@ -2,7 +2,8 @@
  * Pop-up que aparece al hacer clic en el mapa de Aladin
  */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { AIChat } from './AIChat';
 
 interface ClickPopupProps {
   ra: number;
@@ -23,6 +24,7 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
   loading,
   onClose,
 }) => {
+  const [showChat, setShowChat] = useState(false);
   // Añadir animación CSS al montar
   useEffect(() => {
     const style = document.createElement('style');
@@ -114,7 +116,31 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
           <span style={styles.label}>Dec (DMS):</span>
           <span style={styles.value}>{coords.dms}</span>
         </div>
+
+        {/* Botón de Chat IA */}
+        {regionName && (
+          <>
+            <div style={styles.separator} />
+            <button
+              style={styles.chatButton}
+              onClick={() => setShowChat(true)}
+            >
+              Pregunta a la IA sobre {regionName}
+            </button>
+          </>
+        )}
       </div>
+
+      {/* Modal de Chat IA */}
+      {showChat && (
+        <AIChat
+          regionName={regionName}
+          regionDescription={regionDescription}
+          ra={ra}
+          dec={dec}
+          onClose={() => setShowChat(false)}
+        />
+      )}
     </div>
   );
 };
@@ -192,5 +218,18 @@ const styles: Record<string, React.CSSProperties> = {
     height: '1px',
     background: 'rgba(148, 163, 184, 0.3)',
     margin: '12px 0',
+  },
+  chatButton: {
+    width: '100%',
+    padding: '12px 16px',
+    background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+    border: 'none',
+    borderRadius: '8px',
+    color: '#ffffff',
+    fontSize: '14px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    transition: 'all 0.2s',
+    boxShadow: '0 2px 8px rgba(59, 130, 246, 0.3)',
   },
 };

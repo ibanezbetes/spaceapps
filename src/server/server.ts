@@ -11,6 +11,7 @@ import dotenv from 'dotenv';
 import searchRouter from './routes/search';
 import cutoutsRouter from './routes/cutouts';
 import catalogsRouter from './routes/catalogs';
+import aiRouter from './routes/ai';
 
 // Cargar variables de entorno
 dotenv.config();
@@ -52,6 +53,7 @@ app.get('/health', (req, res) => {
 app.use('/api/search', searchRouter);
 app.use('/api/cutout', cutoutsRouter);
 app.use('/api/catalogs', catalogsRouter);
+app.use('/api/ai', aiRouter);
 
 // Metadata endpoint (layers y bookmarks)
 app.get('/api/metadata', (req, res) => {
