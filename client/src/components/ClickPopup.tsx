@@ -70,68 +70,70 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
   const coords = formatCoordinates();
 
   return (
-    <div
-      style={styles.popup}
-    >
-      <div style={styles.header}>
-        <h4 style={styles.title}>
-          {loading 
-            ? 'Identificando región...' 
-            : regionName 
-              ? `${regionIcon ? regionIcon + ' ' : ''}${regionName}` 
-              : 'Coordenadas'}
-        </h4>
-        <button style={styles.closeButton} onClick={onClose}>
-          ×
-        </button>
-      </div>
+    <>
+      <div
+        style={styles.popup}
+      >
+        <div style={styles.header}>
+          <h4 style={styles.title}>
+            {loading 
+              ? 'Identificando región...' 
+              : regionName 
+                ? `${regionIcon ? regionIcon + ' ' : ''}${regionName}` 
+                : 'Coordenadas'}
+          </h4>
+          <button style={styles.closeButton} onClick={onClose}>
+            ×
+          </button>
+        </div>
 
-      <div style={styles.content}>
-        {regionDescription && (
-          <div style={styles.description}>
-            {regionDescription}
+        <div style={styles.content}>
+          {regionDescription && (
+            <div style={styles.description}>
+              {regionDescription}
+            </div>
+          )}
+
+          {regionDescription && <div style={styles.separator} />}
+
+          <div style={styles.field}>
+            <span style={styles.label}>RA (decimal):</span>
+            <span style={styles.value}>{ra.toFixed(6)}°</span>
           </div>
-        )}
 
-        {regionDescription && <div style={styles.separator} />}
+          <div style={styles.field}>
+            <span style={styles.label}>Dec (decimal):</span>
+            <span style={styles.value}>{dec.toFixed(6)}°</span>
+          </div>
 
-        <div style={styles.field}>
-          <span style={styles.label}>RA (decimal):</span>
-          <span style={styles.value}>{ra.toFixed(6)}°</span>
+          <div style={styles.separator} />
+
+          <div style={styles.field}>
+            <span style={styles.label}>RA (HMS):</span>
+            <span style={styles.value}>{coords.hms}</span>
+          </div>
+
+          <div style={styles.field}>
+            <span style={styles.label}>Dec (DMS):</span>
+            <span style={styles.value}>{coords.dms}</span>
+          </div>
+
+          {/* Botón de Chat IA */}
+          {regionName && (
+            <>
+              <div style={styles.separator} />
+              <button
+                style={styles.chatButton}
+                onClick={() => setShowChat(true)}
+              >
+                Pregunta a la IA sobre {regionName}
+              </button>
+            </>
+          )}
         </div>
-
-        <div style={styles.field}>
-          <span style={styles.label}>Dec (decimal):</span>
-          <span style={styles.value}>{dec.toFixed(6)}°</span>
-        </div>
-
-        <div style={styles.separator} />
-
-        <div style={styles.field}>
-          <span style={styles.label}>RA (HMS):</span>
-          <span style={styles.value}>{coords.hms}</span>
-        </div>
-
-        <div style={styles.field}>
-          <span style={styles.label}>Dec (DMS):</span>
-          <span style={styles.value}>{coords.dms}</span>
-        </div>
-
-        {/* Botón de Chat IA */}
-        {regionName && (
-          <>
-            <div style={styles.separator} />
-            <button
-              style={styles.chatButton}
-              onClick={() => setShowChat(true)}
-            >
-              Pregunta a la IA sobre {regionName}
-            </button>
-          </>
-        )}
       </div>
 
-      {/* Modal de Chat IA */}
+      {/* Modal de Chat IA - FUERA del popup para que esté completamente por encima */}
       {showChat && (
         <AIChat
           regionName={regionName}
@@ -141,7 +143,7 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
           onClose={() => setShowChat(false)}
         />
       )}
-    </div>
+    </>
   );
 };
 
