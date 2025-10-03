@@ -60,13 +60,13 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
       <div style={styles.header}>
         <h4 style={styles.title}>
           {loading 
-            ? '🔍 Identificando región...' 
+            ? 'Identificando región...' 
             : regionName 
-              ? `${regionIcon || '📍'} ${regionName}` 
-              : '📍 Coordenadas'}
+              ? `${regionIcon || ''} ${regionName}` 
+              : 'Coordenadas'}
         </h4>
         <button style={styles.closeButton} onClick={onClose}>
-          ✕
+          ×
         </button>
       </div>
 

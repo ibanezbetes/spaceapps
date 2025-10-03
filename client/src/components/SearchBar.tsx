@@ -63,131 +63,140 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <form onSubmit={handleSearch} style={styles.form}>
         <input
           type="text"
+          className="search-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Ej: M42, Betelgeuse, Crab Nebula, 17:45:40 -28:56:10..."
+          placeholder="Buscar en Bug Lightyear..."
           style={styles.input}
           disabled={loading}
         />
-        <button type="submit" style={styles.button} disabled={loading}>
-          {loading ? '🔍...' : '🔍 Buscar'}
-        </button>
+
         <button 
-          type="button" 
-          style={styles.helpButton} 
-          onClick={() => setShowHelp(!showHelp)}
-          title="Ver ejemplos de búsqueda"
+          type="submit" 
+          className="search-button"
+          style={styles.button} 
+          disabled={loading}
         >
-          ❓
+          {loading ? '...' : '🔍'}
         </button>
       </form>
-      {error && <div style={styles.error}>{error}</div>}
-      {success && <div style={styles.success}>{success}</div>}
       
       {showHelp && (
         <div style={styles.helpPanel}>
-          <h4 style={styles.helpTitle}>💡 Ejemplos de Búsqueda</h4>
+          <h4 style={styles.helpTitle}>Ejemplos de Búsqueda</h4>
           <div style={styles.helpContent}>
-            <p><strong>🌟 Nebulosas:</strong> M42, Crab Nebula, Eagle Nebula</p>
-            <p><strong>⭐ Estrellas:</strong> Betelgeuse, Sirius, Vega, Rigel</p>
-            <p><strong>✨ Cúmulos:</strong> Pleiades, M13, M22</p>
-            <p><strong>🌌 Galaxias:</strong> M31, M51, Andromeda Galaxy</p>
-            <p><strong>🌍 Sistema Solar:</strong> Sistema Solar, Sol, Tierra, Luna</p>
-            <p><strong>📍 Coordenadas:</strong> 17:45:40 -28:56:10</p>
+            <p><strong>Nebulosas:</strong> M42, Crab Nebula, Eagle Nebula</p>
+            <p><strong>Estrellas:</strong> Betelgeuse, Sirius, Vega, Rigel</p>
+            <p><strong>Cúmulos:</strong> Pleiades, M13, M22</p>
+            <p><strong>Galaxias:</strong> M31, M51, Andromeda Galaxy</p>
+            <p><strong>Sistema Solar:</strong> Sistema Solar, Sol, Tierra, Luna</p>
+            <p><strong>Coordenadas:</strong> 17:45:40 -28:56:10</p>
             <p style={styles.helpNote}>
-              ℹ️ <strong>Nota:</strong> Los términos del Sistema Solar redirigen a objetos educativos relacionados 
+              <strong>Nota:</strong> Los términos del Sistema Solar redirigen a objetos educativos relacionados 
               (formación planetaria, contexto galáctico, cúmulos estelares).
             </p>
           </div>
         </div>
       )}
+      
+      {error && <div style={styles.error}>{error}</div>}
+      {success && <div style={styles.success}>{success}</div>}
     </div>
   );
 };
 
 const styles: Record<string, React.CSSProperties> = {
   container: {
-    padding: '16px',
-    background: 'rgba(20, 30, 48, 0.95)',
-    borderRadius: '8px',
-    boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+    width: '100%',
   },
   form: {
     display: 'flex',
-    gap: '8px',
+    gap: '0',
+    alignItems: 'center',
+    width: '100%',
   },
   input: {
     flex: 1,
-    padding: '12px 16px',
-    fontSize: '14px',
-    background: '#0a0e1a',
-    border: '1px solid #2a3f5f',
-    borderRadius: '6px',
+    padding: '14px 20px',
+    fontSize: '15px',
+    background: 'transparent',
+    border: 'none',
     color: '#e0e6ed',
     outline: 'none',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   },
   button: {
-    padding: '12px 24px',
+    padding: '10px 20px',
     fontSize: '14px',
-    fontWeight: 600,
+    fontWeight: 500,
     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
     border: 'none',
-    borderRadius: '6px',
+    borderRadius: '4px',
     color: 'white',
     cursor: 'pointer',
-    transition: 'all 0.2s',
+    transition: 'background 0.2s',
+    marginRight: '8px',
   },
   helpButton: {
-    padding: '12px 16px',
-    fontSize: '16px',
-    background: 'rgba(255, 255, 255, 0.1)',
-    border: '1px solid #2a3f5f',
-    borderRadius: '6px',
-    color: '#e0e6ed',
+    padding: '8px 12px',
+    fontSize: '18px',
+    background: 'transparent',
+    border: 'none',
+    color: '#8b96a5',
     cursor: 'pointer',
     transition: 'all 0.2s',
+    marginRight: '4px',
   },
   error: {
     marginTop: '8px',
-    padding: '8px 12px',
+    padding: '12px 16px',
     background: 'rgba(231, 76, 60, 0.2)',
-    border: '1px solid rgba(231, 76, 60, 0.5)',
+    borderLeft: '4px solid #e74c3c',
     borderRadius: '4px',
-    color: '#e74c3c',
+    color: '#ff6b6b',
     fontSize: '13px',
+    fontWeight: 500,
   },
   success: {
     marginTop: '8px',
-    padding: '8px 12px',
+    padding: '12px 16px',
     background: 'rgba(46, 204, 113, 0.2)',
-    border: '1px solid rgba(46, 204, 113, 0.5)',
+    borderLeft: '4px solid #2ecc71',
     borderRadius: '4px',
-    color: '#2ecc71',
+    color: '#51cf66',
     fontSize: '13px',
+    fontWeight: 500,
   },
   helpPanel: {
-    marginTop: '12px',
-    padding: '16px',
-    background: 'rgba(30, 40, 60, 0.95)',
-    border: '1px solid #2a3f5f',
-    borderRadius: '6px',
+    position: 'absolute',
+    top: 'calc(100% + 8px)',
+    left: 0,
+    right: 0,
+    padding: '20px',
+    background: 'rgba(30, 30, 30, 0.95)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '8px',
+    boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+    backdropFilter: 'blur(10px)',
+    zIndex: 10,
   },
   helpTitle: {
-    margin: '0 0 12px 0',
-    color: '#667eea',
-    fontSize: '15px',
+    margin: '0 0 16px 0',
+    color: '#e0e6ed',
+    fontSize: '16px',
     fontWeight: 600,
   },
   helpContent: {
     fontSize: '13px',
     color: '#b8c5d6',
-    lineHeight: '1.6',
+    lineHeight: '1.8',
   },
   helpNote: {
     marginTop: '12px',
     paddingTop: '12px',
-    borderTop: '1px solid #2a3f5f',
+    borderTop: '1px solid rgba(255, 255, 255, 0.1)',
     color: '#ffa726',
     fontSize: '12px',
+    fontStyle: 'italic',
   },
 };

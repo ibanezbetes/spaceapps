@@ -1,5 +1,5 @@
 /**
- * Servidor Express principal para Milky Way Explorer
+ * Servidor Express principal para Bug Lightyear
  */
 
 import express from 'express';
@@ -82,7 +82,7 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 
 app.listen(PORT, () => {
   console.log('');
-  console.log('🌌 Milky Way Explorer - Backend');
+  console.log('🚀 Bug Lightyear - Backend');
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
   console.log('');
   console.log('📡 Endpoints disponibles:');

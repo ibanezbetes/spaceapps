@@ -28,7 +28,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 268,
     dec_min: -30,
     dec_max: -28,
-    icon: '⚫',
+    icon: '',
   },
 
   // ========================================================================
@@ -41,7 +41,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 88,
     dec_min: -8,
     dec_max: 2,
-    icon: '🌟',
+    icon: '',
   },
   {
     name: 'Región Cygnus X',
@@ -50,7 +50,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 312,
     dec_min: 38,
     dec_max: 44,
-    icon: '🌟',
+    icon: '',
   },
   {
     name: 'Nebulosa de Carina',
@@ -59,7 +59,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 165,
     dec_min: -62,
     dec_max: -58,
-    icon: '🌟',
+    icon: '',
   },
   {
     name: 'Nebulosa de la Tarántula',
@@ -103,7 +103,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 58,
     dec_min: 23,
     dec_max: 25,
-    icon: '✨',
+    icon: '',
   },
   {
     name: 'Cúmulo de las Híades',
@@ -112,7 +112,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 68,
     dec_min: 14,
     dec_max: 17,
-    icon: '✨',
+    icon: '',
   },
   {
     name: 'Cúmulo Doble de Perseo',
@@ -121,7 +121,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 36,
     dec_min: 56,
     dec_max: 58,
-    icon: '✨',
+    icon: '',
   },
 
   // ========================================================================
@@ -134,7 +134,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 280,
     dec_min: -35,
     dec_max: -20,
-    icon: '🌌',
+    icon: '',
   },
   {
     name: 'Brazo de Perseo',
@@ -143,7 +143,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 80,
     dec_min: 30,
     dec_max: 60,
-    icon: '🌌',
+    icon: '',
   },
   {
     name: 'Brazo de Orión (Local)',
@@ -152,7 +152,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 90,
     dec_min: -10,
     dec_max: 10,
-    icon: '🌌',
+    icon: '',
   },
 
   // ========================================================================
@@ -165,7 +165,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 12,
     dec_min: 40,
     dec_max: 42,
-    icon: '🌀',
+    icon: '',
   },
   {
     name: 'Galaxia del Triángulo',
@@ -174,7 +174,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 25,
     dec_min: 29,
     dec_max: 31,
-    icon: '🌀',
+    icon: '',
   },
   {
     name: 'Gran Nube de Magallanes',
@@ -240,7 +240,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 360,
     dec_min: -90,
     dec_max: 90,
-    icon: '🌌',
+    icon: '',
   },
 ];
 

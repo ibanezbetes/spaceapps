@@ -27,11 +27,15 @@ export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onC
       projection: 'AIT', // Aitoff projection (all-sky friendly)
       showReticle: true,
       showZoomControl: true,
-      showFullscreenControl: true,
+      showFullscreenControl: false, // Ocultar botón de pantalla completa
       showLayersControl: true,
       showGotoControl: false,
-      showFrame: true,
+      showFrame: false, // Ocultar el selector de frame (ICRS/Galactic)
       showCooGrid: true,
+      showCooGridControl: false, // Ocultar control de grid de coordenadas
+      showSimbadPointerControl: false, // Ocultar control de Simbad
+      showCooLocation: false, // OCULTAR control de ubicación/coordenadas
+      showStackControl: false, // OCULTAR botón de Stack
       cooFrame: 'J2000',
     });
 

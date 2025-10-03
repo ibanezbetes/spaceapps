@@ -1,0 +1,199 @@
+/* Estilos globales para UI - MODO OSCURO */
+
+/* Ocultar controles de Aladin que no necesitamos */
+/* Selector para el botón de frame (ICRS) */
+.aladin-frame-select,
+.aladin-coo-div,
+.aladin-frame-control,
+div[title*="ICRS"],
+div[title*="Galactic"],
+button[title*="ICRS"],
+button[title*="Galactic"],
+/* Selector para el botón Stack - OCULTAR COMPLETAMENTE */
+.aladin-stack-control,
+div[title*="Stack"],
+button[title*="Stack"],
+.aladin-btn[title*="Stack"],
+#aladin-lite-div .aladin-stack-control,
+.aladin-box .aladin-stack-control,
+[class*="stack-control"],
+[class*="aladin-stack"],
+/* También ocultar el selector de coordenadas si aparece */
+.aladin-select-box,
+/* Ocultar botón de pantalla completa */
+.aladin-fullScreen-control,
+button[title*="Full screen"],
+button[title*="Pantalla completa"],
+div[title*="Full screen"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* OCULTAR AGRESIVAMENTE el control de coordenadas de Aladin con todos los selectores posibles */
+.aladin-location-control,
+div.aladin-location-control,
+#aladin-lite-div .aladin-location-control,
+.aladin-box .aladin-location-control,
+.aladin-container .aladin-location-control,
+[class*="location-control"],
+[class*="aladin-location"],
+div[class*="location"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* MODO OSCURO - Estilizar controles de Aladin */
+
+/* Posicionar botón de proyección (AIT) a la altura de la barra de búsqueda */
+/* Mismo estilo que logoContainer y searchBoxWrapper */
+.aladin-projection-control,
+div.aladin-projection-control,
+#aladin-lite-div .aladin-projection-control,
+.aladin-box .aladin-projection-control {
+  position: absolute !important;
+  top: 16px !important;
+  z-index: 1000 !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  right: 16px !important;
+  left: auto !important;
+  background: rgba(30, 30, 30, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+  padding: 14px 20px !important;
+  height: 48px !important;
+  font-size: 14px !important;
+  color: #e0e6ed !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s !important;
+  backdrop-filter: blur(10px) !important;
+  display: flex !important;
+  align-items: center !important;
+  box-sizing: border-box !important;
+}
+
+/* Botones dentro del control de proyección */
+button.aladin-btn[title*="projection"],
+button.aladin-btn[title*="Projection"] {
+  background: rgba(30, 30, 30, 0.95) !important;
+  border: none !important;
+  color: #e0e6ed !important;
+}
+
+.aladin-projection-control:hover,
+div.aladin-projection-control:hover,
+button.aladin-btn[title*="projection"]:hover {
+  background: rgba(45, 45, 45, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+/* Control de capas - Modo oscuro */
+.aladin-layersControl-container {
+  background: rgba(30, 30, 30, 0.95) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+.aladin-layersControl-container button {
+  background: transparent !important;
+  border: none !important;
+  color: #e0e6ed !important;
+}
+
+.aladin-layersControl-container button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Hover effects para botones de la UI principal - MODO OSCURO */
+.menu-button:hover {
+  background: rgba(45, 45, 45, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+}
+
+.coords-button:hover {
+  background: rgba(45, 45, 45, 0.95) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4) !important;
+  transform: translateY(-1px);
+}
+
+.example-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.close-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+}
+
+/* Animaciones suaves */
+.side-panel {
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.info-card {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Search bar focus effect */
+.search-input:focus {
+  outline: none;
+}
+
+.search-input::placeholder {
+  color: #8b96a5;
+  opacity: 0.7;
+}
+
+.search-button:hover {
+  background: #764ba2 !important;
+}
+
+.help-button:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 50%;
+}
+
+/* Survey chips hover - MODO OSCURO */
+.survey-chip {
+  transition: all 0.2s;
+}
+
+.survey-chip:hover {
+  background: rgba(102, 126, 234, 0.3) !important;
+  transform: translateY(-1px);
+}

@@ -1,0 +1,12 @@
+<!-- Placeholder for Buzz Lightyear image -->
+<!-- The actual image should be saved as buzz-lightyear.png -->
+<!-- This file is a placeholder to indicate where the image should be placed -->
+
+To use your custom Buzz Lightyear image:
+1. Save your image as: buzz-lightyear.png
+2. Place it in this directory: client/public/
+3. The app will automatically use it
+
+Current setup:
+- Local image path: /buzz-lightyear.png
+- Fallback URL: https://i.imgur.com/7ZqKX5j.png

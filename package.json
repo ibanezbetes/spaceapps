@@ -2,7 +2,7 @@
   "name": "milkyway-explorer",
   "version": "1.0.0",
   "private": true,
-  "description": "Full-stack Milky Way Explorer using NASA/IPAC IRSA APIs + NASA SkyView + Aladin Lite v3",
+  "description": "Full-stack Bug Lightyear using NASA/IPAC IRSA APIs + NASA SkyView + Aladin Lite v3",
   "main": "dist/server/server.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server/server.ts",
