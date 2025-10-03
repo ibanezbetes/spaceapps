@@ -1,0 +1,60 @@
+.viewer-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.viewer {
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.object-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 215, 0, 0.6);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 8px rgba(255, 215, 0, 0.4);
+}
+
+.object-marker:hover,
+.object-marker.hovered {
+  transform: scale(1.5);
+  background: rgba(255, 215, 0, 0.9);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.8);
+  z-index: 10;
+}
+
+.object-marker.selected {
+  background: rgba(0, 255, 255, 0.8);
+  border-color: rgba(0, 255, 255, 1);
+  box-shadow: 0 0 20px rgba(0, 255, 255, 0.9);
+  transform: scale(1.8);
+  z-index: 20;
+}
+
+/* Category-specific colors */
+.object-marker[data-category='stars'] {
+  background: rgba(255, 255, 200, 0.7);
+}
+
+.object-marker[data-category='galaxies'] {
+  background: rgba(150, 100, 255, 0.7);
+}
+
+.object-marker[data-category='nebulae'] {
+  background: rgba(255, 100, 150, 0.7);
+}
+
+.object-marker[data-category='clusters'] {
+  background: rgba(100, 200, 255, 0.7);
+}
+
+.object-marker[data-category='planets'] {
+  background: rgba(100, 255, 100, 0.7);
+}
