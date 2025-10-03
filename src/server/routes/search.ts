@@ -259,14 +259,14 @@ function searchByKeywords(text: string): SearchResult | null {
       ra: 83.818662, // Nebulosa de Orión - región de formación planetaria
       dec: -5.389679, 
       fov: 4,
-      note: '🌌 Sistema Solar - Te mostramos la Nebulosa de Orión (M42), donde se están formando nuevos sistemas planetarios ahora mismo. Así se veía la región donde nació nuestro Sistema Solar hace 4,600 millones de años.',
+      note: 'Sistema Solar - Te mostramos la Nebulosa de Orión (M42), donde se están formando nuevos sistemas planetarios ahora mismo. Así se veía la región donde nació nuestro Sistema Solar hace 4,600 millones de años.',
       surveys: ['wise_w4', 'wise_w3', 'dss2_red']
     },
     'solar system': { 
       ra: 83.818662,
       dec: -5.389679, 
       fov: 4,
-      note: '🌌 Solar System - Showing you the Orion Nebula (M42), where new planetary systems are forming right now. This is how the region where our Solar System was born looked 4.6 billion years ago.',
+      note: 'Solar System - Showing you the Orion Nebula (M42), where new planetary systems are forming right now. This is how the region where our Solar System was born looked 4.6 billion years ago.',
       surveys: ['wise_w4', 'wise_w3', 'dss2_red']
     },
     
@@ -275,14 +275,14 @@ function searchByKeywords(text: string): SearchResult | null {
       ra: 266.41683, // Centro Galáctico
       dec: -29.00781, 
       fov: 6,
-      note: '☀️ El Sol - Nuestro Sol es una estrella tipo G2V a 26,000 años luz del Centro Galáctico. Te mostramos Sagitario A*, el agujero negro supermasivo de 4 millones de masas solares en el corazón de la Vía Láctea.',
+      note: 'El Sol - Nuestro Sol es una estrella tipo G2V a 26,000 años luz del Centro Galáctico. Te mostramos Sagitario A*, el agujero negro supermasivo de 4 millones de masas solares en el corazón de la Vía Láctea.',
       surveys: ['wise_w3', '2mass_k', 'dss2_red']
     },
     'sun': { 
       ra: 266.41683,
       dec: -29.00781, 
       fov: 6,
-      note: '☀️ The Sun - Our Sun is a G2V star 26,000 light-years from the Galactic Center. Showing you Sagittarius A*, the 4-million-solar-mass supermassive black hole at the heart of the Milky Way.',
+      note: 'The Sun - Our Sun is a G2V star 26,000 light-years from the Galactic Center. Showing you Sagittarius A*, the 4-million-solar-mass supermassive black hole at the heart of the Milky Way.',
       surveys: ['wise_w3', '2mass_k', 'dss2_red']
     },
     
@@ -291,14 +291,14 @@ function searchByKeywords(text: string): SearchResult | null {
       ra: 83.818662, // M42
       dec: -5.389679, 
       fov: 3,
-      note: '🌍 La Tierra - Nuestro hogar en el cosmos. Te mostramos M42, donde se forman nuevos planetas. Así nació la Tierra hace 4,600 millones de años.',
+      note: 'La Tierra - Nuestro hogar en el cosmos. Te mostramos M42, donde se forman nuevos planetas. Así nació la Tierra hace 4,600 millones de años.',
       surveys: ['wise_w4', 'wise_w3', 'galex_fuv']
     },
     'earth': { 
       ra: 83.818662,
       dec: -5.389679, 
       fov: 3,
-      note: '🌍 Earth - Our home in the cosmos. Showing you M42, where new planets are forming. This is how Earth was born 4.6 billion years ago.',
+      note: 'Earth - Our home in the cosmos. Showing you M42, where new planets are forming. This is how Earth was born 4.6 billion years ago.',
       surveys: ['wise_w4', 'wise_w3', 'galex_fuv']
     },
     
@@ -307,14 +307,14 @@ function searchByKeywords(text: string): SearchResult | null {
       ra: 56.869089, // Pleiades
       dec: 24.105313, 
       fov: 2,
-      note: '🌙 La Luna - Formada hace 4,500 millones de años por un impacto masivo. Te mostramos las Pléyades (M45), un cúmulo estelar joven donde las estrellas nacieron juntas.',
+      note: 'La Luna - Formada hace 4,500 millones de años por un impacto masivo. Te mostramos las Pléyades (M45), un cúmulo estelar joven donde las estrellas nacieron juntas.',
       surveys: ['2mass_k', 'dss2_red', 'wise_w1']
     },
     'moon': { 
       ra: 56.869089,
       dec: 24.105313, 
       fov: 2,
-      note: '🌙 The Moon - Formed 4.5 billion years ago by a massive impact. Showing you the Pleiades (M45), a young star cluster where stars were born together.',
+      note: 'The Moon - Formed 4.5 billion years ago by a massive impact. Showing you the Pleiades (M45), a young star cluster where stars were born together.',
       surveys: ['2mass_k', 'dss2_red', 'wise_w1']
     },
   };

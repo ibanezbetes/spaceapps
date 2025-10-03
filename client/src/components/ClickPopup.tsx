@@ -76,7 +76,7 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
           {loading 
             ? 'Identificando región...' 
             : regionName 
-              ? `${regionIcon || ''} ${regionName}` 
+              ? `${regionIcon ? regionIcon + ' ' : ''}${regionName}` 
               : 'Coordenadas'}
         </h4>
         <button style={styles.closeButton} onClick={onClose}>

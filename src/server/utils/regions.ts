@@ -68,7 +68,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 86,
     dec_min: -70,
     dec_max: -68,
-    icon: '🕷️',
+    icon: '',
   },
 
   // ========================================================================
@@ -81,7 +81,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 70,
     dec_min: 14,
     dec_max: 30,
-    icon: '☁️',
+    icon: '',
   },
   {
     name: 'Complejo Ophiuchus',
@@ -90,7 +90,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 250,
     dec_min: -25,
     dec_max: -20,
-    icon: '☁️',
+    icon: '',
   },
 
   // ========================================================================
@@ -183,7 +183,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 90,
     dec_min: -72,
     dec_max: -64,
-    icon: '☁️',
+    icon: '',
   },
   {
     name: 'Pequeña Nube de Magallanes',
@@ -192,7 +192,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 20,
     dec_min: -74,
     dec_max: -70,
-    icon: '☁️',
+    icon: '',
   },
 
   // ========================================================================
@@ -279,5 +279,5 @@ export function findRegionByCoordinates(ra: number, dec: number): AstronomicalRe
  * Obtiene una descripción contextual basada en la región
  */
 export function getRegionContext(region: AstronomicalRegion): string {
-  return `${region.icon} ${region.name} - ${region.description}`;
+  return `${region.icon ? region.icon + ' ' : ''}${region.name} - ${region.description}`;
 }
