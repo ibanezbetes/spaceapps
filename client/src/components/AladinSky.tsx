@@ -9,7 +9,7 @@ interface AladinSkyProps {
   dec: number;
   fov: number; // Field of view en grados
   onReady?: (aladin: any) => void;
-  onClick?: (ra: number, dec: number) => void;
+  onClick?: (ra: number, dec: number, event?: MouseEvent) => void;
 }
 
 export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onClick }) => {
@@ -42,7 +42,8 @@ export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onC
     if (onClick) {
       aladin.on('click', (e: any) => {
         const position = aladin.getRaDec();
-        onClick(position[0], position[1]);
+        // Pasar el evento nativo del mouse si está disponible
+        onClick(position[0], position[1], e?.originalEvent || e);
       });
     }
 

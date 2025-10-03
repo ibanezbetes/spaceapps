@@ -7,6 +7,7 @@ import axios from 'axios';
 import { z } from 'zod';
 import { parseCoordinates } from '../utils/coords';
 import { LRUCache, generateCacheKey } from '../utils/cache';
+import { findRegionByCoordinates, getRegionContext } from '../utils/regions';
 import layersData from '../data/layers.json';
 
 const router = express.Router();
@@ -449,6 +450,49 @@ function formatCoordinates(ra: number, dec: number): string {
 function sanitizeForSQL(input: string): string {
   return input.replace(/[';-]/g, '').trim();
 }
+
+/**
+ * GET /api/search/nearby?ra=<ra>&dec=<dec>&radius=<arcmin>
+ * 
+ * Busca la región astronómica grande que contiene las coordenadas
+ * En lugar de objetos individuales, retorna nombres de regiones (Orión, Centro Galáctico, etc.)
+ */
+router.get('/nearby', async (req: Request, res: Response) => {
+  try {
+    const ra = parseFloat(req.query.ra as string);
+    const dec = parseFloat(req.query.dec as string);
+
+    if (isNaN(ra) || isNaN(dec)) {
+      return res.status(400).json({ error: 'Coordenadas inválidas' });
+    }
+
+    console.log(`[NEARBY] Buscando región para RA=${ra}, DEC=${dec}`);
+
+    // Buscar la región astronómica que contiene estas coordenadas
+    const region = findRegionByCoordinates(ra, dec);
+    const context = getRegionContext(region);
+
+    console.log(`[NEARBY] ✓ Región encontrada: ${region.name}`);
+
+    return res.json({
+      found: true,
+      name: region.name,
+      type: 'region',
+      description: region.description,
+      context: context,
+      icon: region.icon,
+      ra,
+      dec,
+    });
+
+  } catch (error: any) {
+    console.error('[NEARBY ERROR]', error.message);
+    res.status(500).json({
+      error: 'Error buscando región',
+      found: false,
+    });
+  }
+});
 
 // Cleanup periódico
 setInterval(() => {

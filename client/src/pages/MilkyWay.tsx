@@ -3,8 +3,10 @@
  */
 
 import React, { useState, useRef } from 'react';
+import axios from 'axios';
 import { AladinSky } from '../components/AladinSky';
 import { SearchBar } from '../components/SearchBar';
+import { ClickPopup } from '../components/ClickPopup';
 
 export const MilkyWay: React.FC = () => {
   // Estado de la vista
@@ -14,6 +16,18 @@ export const MilkyWay: React.FC = () => {
   
   // Estado de info
   const [searchResult, setSearchResult] = useState<any>(null);
+  
+  // Estado del popup de click
+  const [clickPopup, setClickPopup] = useState<{
+    visible: boolean;
+    ra: number;
+    dec: number;
+    regionName?: string;
+    regionDescription?: string;
+    regionIcon?: string;
+    loading: boolean;
+    position: { x: number; y: number };
+  } | null>(null);
   
   // Referencia a Aladin
   const aladinRef = useRef<any>(null);
@@ -32,8 +46,70 @@ export const MilkyWay: React.FC = () => {
     aladinRef.current = aladin;
   };
 
-  const handleClick = (clickRa: number, clickDec: number) => {
+  const handleClick = async (clickRa: number, clickDec: number, event?: MouseEvent) => {
     console.log(`[CLICK] RA=${clickRa}, Dec=${clickDec}`);
+    
+    // Obtener posición del mouse para el popup
+    const mouseX = event?.clientX || window.innerWidth / 2;
+    const mouseY = event?.clientY || window.innerHeight / 2;
+    
+    // Mostrar popup inmediatamente con "loading"
+    setClickPopup({
+      visible: true,
+      ra: clickRa,
+      dec: clickDec,
+      loading: true,
+      position: { x: mouseX, y: mouseY },
+    });
+
+    try {
+      // Buscar región astronómica para las coordenadas clickeadas
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const response = await axios.get(`${apiUrl}/api/search/nearby`, {
+        params: {
+          ra: clickRa,
+          dec: clickDec,
+        },
+        timeout: 8000,
+      });
+
+      // Actualizar popup con la región encontrada
+      if (response.data && response.data.found) {
+        setClickPopup({
+          visible: true,
+          ra: clickRa,
+          dec: clickDec,
+          regionName: response.data.name,
+          regionDescription: response.data.description,
+          regionIcon: response.data.icon,
+          loading: false,
+          position: { x: mouseX, y: mouseY },
+        });
+      } else {
+        // Fallback (no debería ocurrir ya que siempre hay una región)
+        setClickPopup({
+          visible: true,
+          ra: clickRa,
+          dec: clickDec,
+          loading: false,
+          position: { x: mouseX, y: mouseY },
+        });
+      }
+    } catch (error) {
+      console.log('[CLICK] Error buscando región, mostrando solo coordenadas');
+      // Error - mostrar solo coordenadas
+      setClickPopup({
+        visible: true,
+        ra: clickRa,
+        dec: clickDec,
+        loading: false,
+        position: { x: mouseX, y: mouseY },
+      });
+    }
+  };
+
+  const handleClosePopup = () => {
+    setClickPopup(null);
   };
 
   return (
@@ -89,7 +165,7 @@ export const MilkyWay: React.FC = () => {
 
       {/* Bookmarks (Quick Access) */}
       <div style={styles.bookmarks}>
-        <h4 style={styles.bookmarksTitle}>⭐ Quick Access</h4>
+        <h4 style={styles.bookmarksTitle}>Ejemplos:</h4>
         <button
           style={styles.bookmarkButton}
           onClick={() => handleSearch({ ra: 266.41683, dec: -29.00781, fov: 6, type: 'bookmark', note: 'Centro Galáctico' })}
@@ -109,6 +185,20 @@ export const MilkyWay: React.FC = () => {
           Nebulosa Orión
         </button>
       </div>
+
+      {/* Click Popup */}
+      {clickPopup && (
+        <ClickPopup
+          ra={clickPopup.ra}
+          dec={clickPopup.dec}
+          regionName={clickPopup.regionName}
+          regionDescription={clickPopup.regionDescription}
+          regionIcon={clickPopup.regionIcon}
+          loading={clickPopup.loading}
+          position={clickPopup.position}
+          onClose={handleClosePopup}
+        />
+      )}
     </div>
   );
 };
