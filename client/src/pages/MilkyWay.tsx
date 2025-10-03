@@ -26,7 +26,6 @@ export const MilkyWay: React.FC = () => {
     regionDescription?: string;
     regionIcon?: string;
     loading: boolean;
-    position: { x: number; y: number };
   } | null>(null);
   
   // Referencia a Aladin
@@ -46,12 +45,8 @@ export const MilkyWay: React.FC = () => {
     aladinRef.current = aladin;
   };
 
-  const handleClick = async (clickRa: number, clickDec: number, event?: MouseEvent) => {
+  const handleClick = async (clickRa: number, clickDec: number) => {
     console.log(`[CLICK] RA=${clickRa}, Dec=${clickDec}`);
-    
-    // Obtener posición del mouse para el popup
-    const mouseX = event?.clientX || window.innerWidth / 2;
-    const mouseY = event?.clientY || window.innerHeight / 2;
     
     // Mostrar popup inmediatamente con "loading"
     setClickPopup({
@@ -59,7 +54,6 @@ export const MilkyWay: React.FC = () => {
       ra: clickRa,
       dec: clickDec,
       loading: true,
-      position: { x: mouseX, y: mouseY },
     });
 
     try {
@@ -83,7 +77,6 @@ export const MilkyWay: React.FC = () => {
           regionDescription: response.data.description,
           regionIcon: response.data.icon,
           loading: false,
-          position: { x: mouseX, y: mouseY },
         });
       } else {
         // Fallback (no debería ocurrir ya que siempre hay una región)
@@ -92,7 +85,6 @@ export const MilkyWay: React.FC = () => {
           ra: clickRa,
           dec: clickDec,
           loading: false,
-          position: { x: mouseX, y: mouseY },
         });
       }
     } catch (error) {
@@ -103,7 +95,6 @@ export const MilkyWay: React.FC = () => {
         ra: clickRa,
         dec: clickDec,
         loading: false,
-        position: { x: mouseX, y: mouseY },
       });
     }
   };
@@ -257,7 +248,6 @@ export const MilkyWay: React.FC = () => {
           regionDescription={clickPopup.regionDescription}
           regionIcon={clickPopup.regionIcon}
           loading={clickPopup.loading}
-          position={clickPopup.position}
           onClose={handleClosePopup}
         />
       )}

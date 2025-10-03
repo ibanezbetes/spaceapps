@@ -2,7 +2,7 @@
  * Pop-up que aparece al hacer clic en el mapa de Aladin
  */
 
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface ClickPopupProps {
   ra: number;
@@ -12,7 +12,6 @@ interface ClickPopupProps {
   regionIcon?: string;
   loading?: boolean;
   onClose: () => void;
-  position: { x: number; y: number };
 }
 
 export const ClickPopup: React.FC<ClickPopupProps> = ({
@@ -23,8 +22,27 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
   regionIcon,
   loading,
   onClose,
-  position,
 }) => {
+  // Añadir animación CSS al montar
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes slideInFromBottom {
+        from {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
   // Convertir coordenadas a formato HMS/DMS
   const formatCoordinates = () => {
     // RA a HMS
@@ -51,11 +69,7 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
 
   return (
     <div
-      style={{
-        ...styles.popup,
-        left: `${position.x}px`,
-        top: `${position.y}px`,
-      }}
+      style={styles.popup}
     >
       <div style={styles.header}>
         <h4 style={styles.title}>
@@ -108,6 +122,8 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
 const styles: Record<string, React.CSSProperties> = {
   popup: {
     position: 'fixed',
+    bottom: '20px',
+    right: '20px',
     background: 'rgba(15, 23, 42, 0.98)',
     border: '2px solid #3b82f6',
     borderRadius: '12px',
@@ -116,7 +132,7 @@ const styles: Record<string, React.CSSProperties> = {
     maxWidth: '400px',
     zIndex: 10000,
     backdropFilter: 'blur(10px)',
-    transform: 'translate(-50%, -100%) translateY(-20px)',
+    animation: 'slideInFromBottom 0.3s ease-out',
   },
   header: {
     display: 'flex',
