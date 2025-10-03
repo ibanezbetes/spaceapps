@@ -1,0 +1,215 @@
+{
+  "surveys": [
+    {
+      "id": "wise_w1",
+      "name": "WISE W1 (3.4µm)",
+      "service": "irsa",
+      "dataset": "wise_allsky",
+      "band": "IR",
+      "wavelength_um": 3.4,
+      "default_opacity": 0.85,
+      "color": "#FF6B35",
+      "description": "Emisión estelar, galaxias frías"
+    },
+    {
+      "id": "wise_w2",
+      "name": "WISE W2 (4.6µm)",
+      "service": "irsa",
+      "dataset": "wise_allsky",
+      "band": "IR",
+      "wavelength_um": 4.6,
+      "default_opacity": 0.85,
+      "color": "#FF8C42",
+      "description": "Polvo cálido, AGN"
+    },
+    {
+      "id": "wise_w3",
+      "name": "WISE W3 (12µm)",
+      "service": "irsa",
+      "dataset": "wise_allsky",
+      "band": "IR",
+      "wavelength_um": 12,
+      "default_opacity": 0.9,
+      "color": "#FFA552",
+      "description": "Polvo caliente, regiones HII"
+    },
+    {
+      "id": "wise_w4",
+      "name": "WISE W4 (22µm)",
+      "service": "irsa",
+      "dataset": "wise_allsky",
+      "band": "IR",
+      "wavelength_um": 22,
+      "default_opacity": 0.9,
+      "color": "#FFD700",
+      "description": "Polvo muy caliente, protoestrellas"
+    },
+    {
+      "id": "2mass_j",
+      "name": "2MASS J (1.25µm)",
+      "service": "skyview",
+      "survey_name": "2MASS-J",
+      "band": "NIR",
+      "wavelength_um": 1.25,
+      "default_opacity": 0.8,
+      "color": "#8B0000",
+      "description": "Cerca-IR, población estelar vieja"
+    },
+    {
+      "id": "2mass_h",
+      "name": "2MASS H (1.65µm)",
+      "service": "skyview",
+      "survey_name": "2MASS-H",
+      "band": "NIR",
+      "wavelength_um": 1.65,
+      "default_opacity": 0.8,
+      "color": "#B22222",
+      "description": "Cerca-IR, penetración de polvo"
+    },
+    {
+      "id": "2mass_k",
+      "name": "2MASS Ks (2.17µm)",
+      "service": "skyview",
+      "survey_name": "2MASS-K",
+      "band": "NIR",
+      "wavelength_um": 2.17,
+      "default_opacity": 0.8,
+      "color": "#DC143C",
+      "description": "Cerca-IR, estructura galáctica"
+    },
+    {
+      "id": "dss2_red",
+      "name": "DSS2 Red",
+      "service": "skyview",
+      "survey_name": "DSS2 Red",
+      "band": "Optical",
+      "wavelength_um": 0.65,
+      "default_opacity": 0.75,
+      "color": "#E74C3C",
+      "description": "Óptico rojo, emisión H-alpha"
+    },
+    {
+      "id": "dss2_blue",
+      "name": "DSS2 Blue",
+      "service": "skyview",
+      "survey_name": "DSS2 Blue",
+      "band": "Optical",
+      "wavelength_um": 0.45,
+      "default_opacity": 0.75,
+      "color": "#3498DB",
+      "description": "Óptico azul, estrellas calientes"
+    },
+    {
+      "id": "dss2_ir",
+      "name": "DSS2 IR",
+      "service": "skyview",
+      "survey_name": "DSS2 IR",
+      "band": "NIR",
+      "wavelength_um": 0.85,
+      "default_opacity": 0.75,
+      "color": "#C0392B",
+      "description": "Infrarrojo cercano óptico"
+    },
+    {
+      "id": "galex_fuv",
+      "name": "GALEX FUV (0.15µm)",
+      "service": "skyview",
+      "survey_name": "GALEX FUV",
+      "band": "UV",
+      "wavelength_um": 0.15,
+      "default_opacity": 0.85,
+      "color": "#9B59B6",
+      "description": "UV lejano, estrellas jóvenes masivas"
+    },
+    {
+      "id": "galex_nuv",
+      "name": "GALEX NUV (0.23µm)",
+      "service": "skyview",
+      "survey_name": "GALEX NUV",
+      "band": "UV",
+      "wavelength_um": 0.23,
+      "default_opacity": 0.85,
+      "color": "#8E44AD",
+      "description": "UV cercano, formación estelar"
+    },
+    {
+      "id": "nvss",
+      "name": "NVSS 1.4 GHz",
+      "service": "skyview",
+      "survey_name": "NVSS",
+      "band": "Radio",
+      "wavelength_um": 214000,
+      "default_opacity": 0.8,
+      "color": "#16A085",
+      "description": "Radio continuo, sincrotrón"
+    },
+    {
+      "id": "408mhz",
+      "name": "408 MHz All-Sky",
+      "service": "skyview",
+      "survey_name": "408 MHz",
+      "band": "Radio",
+      "wavelength_um": 735000,
+      "default_opacity": 0.75,
+      "color": "#1ABC9C",
+      "description": "Radio all-sky, estructura galáctica"
+    }
+  ],
+  "catalogs": [
+    {
+      "id": "allwise",
+      "name": "AllWISE Source Catalog",
+      "table": "allwise_p3as_psd",
+      "service": "irsa_scs",
+      "columns": ["designation", "ra", "dec", "w1mpro", "w2mpro", "w3mpro", "w4mpro"],
+      "description": "~750M fuentes IR all-sky (WISE + NEOWISE)",
+      "marker_color": "#FF6B35"
+    },
+    {
+      "id": "2mass_psc",
+      "name": "2MASS Point Source Catalog",
+      "table": "fp_psc",
+      "service": "irsa_scs",
+      "columns": ["designation", "ra", "dec", "j_m", "h_m", "k_m"],
+      "description": "~470M fuentes NIR all-sky",
+      "marker_color": "#DC143C"
+    }
+  ],
+  "bookmarks": [
+    {
+      "name": "Centro Galáctico",
+      "ra": 266.41683,
+      "dec": -29.00781,
+      "fov": 6,
+      "suggested_layers": ["wise_w3", "2mass_k", "dss2_red"]
+    },
+    {
+      "name": "Cygnus X",
+      "ra": 308.5,
+      "dec": 41.0,
+      "fov": 5,
+      "suggested_layers": ["wise_w4", "galex_fuv", "nvss"]
+    },
+    {
+      "name": "Nebulosa de Orión (M42)",
+      "ra": 83.82208,
+      "dec": -5.39111,
+      "fov": 1.5,
+      "suggested_layers": ["wise_w4", "dss2_red", "galex_nuv"]
+    },
+    {
+      "name": "Andrómeda (M31)",
+      "ra": 10.68458,
+      "dec": 41.26917,
+      "fov": 3,
+      "suggested_layers": ["2mass_j", "galex_fuv", "dss2_blue"]
+    },
+    {
+      "name": "Nebulosa del Cangrejo (M1)",
+      "ra": 83.63308,
+      "dec": 22.0145,
+      "fov": 0.3,
+      "suggested_layers": ["nvss", "dss2_red", "wise_w3"]
+    }
+  ]
+}
