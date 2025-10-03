@@ -4,6 +4,7 @@
  */
 
 import React, { useEffect, useRef, useState } from 'react';
+import { AIChat } from './AIChat';
 
 interface SolarSystemMapProps {
   onClose: () => void;
@@ -26,6 +27,7 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
   const [selectedPlanet, setSelectedPlanet] = useState<PlanetInfo | null>(null);
   const [scale, setScale] = useState(1);
   const [showOrbits, setShowOrbits] = useState(true);
+  const [showChat, setShowChat] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
 
@@ -159,18 +161,18 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
       // Limpiar canvas
       ctx.clearRect(0, 0, width, height);
 
-      // Fondo espacial con estrellas
+      // Fondo espacial sin estrellas (más limpio)
       ctx.fillStyle = '#0a0e27';
       ctx.fillRect(0, 0, width, height);
 
-      // Dibujar estrellas
-      ctx.fillStyle = 'white';
-      for (let i = 0; i < 200; i++) {
-        const x = Math.random() * width;
-        const y = Math.random() * height;
-        const size = Math.random() * 2;
-        ctx.fillRect(x, y, size, size);
-      }
+      // Estrellas eliminadas para evitar el efecto parpadeante molesto
+      // ctx.fillStyle = 'white';
+      // for (let i = 0; i < 200; i++) {
+      //   const x = Math.random() * width;
+      //   const y = Math.random() * height;
+      //   const size = Math.random() * 2;
+      //   ctx.fillRect(x, y, size, size);
+      // }
 
       // Dibujar el Sol
       const sun = planets[0];
@@ -200,11 +202,11 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
         const x = centerX + orbitRadius * Math.cos(planetAngle);
         const y = centerY + orbitRadius * Math.sin(planetAngle);
 
-        // Dibujar planeta
-        ctx.beginPath();
-        ctx.arc(x, y, planet.size * scale, 0, Math.PI * 2);
-        ctx.fillStyle = planet.color;
-        ctx.fill();
+        // Dibujar planeta - SIN círculo de color de fondo
+        // ctx.beginPath();
+        // ctx.arc(x, y, planet.size * scale, 0, Math.PI * 2);
+        // ctx.fillStyle = planet.color;
+        // ctx.fill();
 
         // Dibujar emoji del planeta
         ctx.font = `${planet.size * scale * 1.5}px Arial`;
@@ -278,6 +280,18 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
     return () => window.removeEventListener('resize', resize);
   }, []);
 
+  // Manejar zoom con rueda del ratón
+  const handleWheel = (e: React.WheelEvent<HTMLCanvasElement>) => {
+    e.preventDefault();
+    
+    // deltaY negativo = scroll hacia arriba = zoom in
+    // deltaY positivo = scroll hacia abajo = zoom out
+    const zoomDelta = e.deltaY > 0 ? -0.1 : 0.1;
+    const newScale = Math.max(0.5, Math.min(2, scale + zoomDelta));
+    
+    setScale(newScale);
+  };
+
   return (
     <div style={styles.container}>
       {/* Canvas del Sistema Solar */}
@@ -285,31 +299,37 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
         ref={canvasRef}
         style={styles.canvas}
         onClick={handleCanvasClick}
+        onWheel={handleWheel}
       />
 
       {/* Título */}
       <div style={styles.header}>
         <h1 style={styles.title}>
-          🌌 Mapa Interactivo del Sistema Solar
+          Mapa Interactivo del Sistema Solar
         </h1>
         <p style={styles.subtitle}>
           Haz clic en los planetas para aprender más
         </p>
       </div>
 
-      {/* Controles */}
-      <div style={styles.controls}>
+      {/* Controles - OCULTOS */}
+      {/* <div style={styles.controls}>
         <button
           style={styles.controlButton}
           onClick={() => setScale(Math.min(scale + 0.2, 2))}
+          disabled={scale >= 2}
         >
-          🔍 Acercar
+          🔍+ Acercar
         </button>
+        <div style={styles.zoomIndicator}>
+          Zoom: {Math.round(scale * 100)}%
+        </div>
         <button
           style={styles.controlButton}
           onClick={() => setScale(Math.max(scale - 0.2, 0.5))}
+          disabled={scale <= 0.5}
         >
-          🔍 Alejar
+          🔍− Alejar
         </button>
         <button
           style={styles.controlButton}
@@ -317,7 +337,13 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
         >
           {showOrbits ? '👁️ Ocultar órbitas' : '👁️ Mostrar órbitas'}
         </button>
-      </div>
+        <button
+          style={styles.controlButton}
+          onClick={() => setScale(1)}
+        >
+          🎯 Restablecer
+        </button>
+      </div> */}
 
       {/* Información del planeta seleccionado */}
       {selectedPlanet && (
@@ -347,7 +373,26 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
             <div style={styles.funFactIcon}>💡</div>
             <p style={styles.funFact}>{selectedPlanet.funFact}</p>
           </div>
+
+          {/* Botón para abrir chat IA */}
+          <button
+            style={styles.aiChatButton}
+            onClick={() => setShowChat(true)}
+          >
+            💬 Pregunta a la IA sobre {selectedPlanet.name}
+          </button>
         </div>
+      )}
+
+      {/* Chat de IA */}
+      {showChat && selectedPlanet && (
+        <AIChat
+          regionName={selectedPlanet.name}
+          regionDescription={`${selectedPlanet.description} ${selectedPlanet.funFact}`}
+          ra={0}
+          dec={0}
+          onClose={() => setShowChat(false)}
+        />
       )}
 
       {/* Botón de cerrar */}
@@ -355,8 +400,8 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
         ← Volver al Mapa Galáctico
       </button>
 
-      {/* Leyenda de planetas */}
-      <div style={styles.legend}>
+      {/* Leyenda de planetas - OCULTA */}
+      {/* <div style={styles.legend}>
         <h3 style={styles.legendTitle}>Planetas</h3>
         <div style={styles.legendItems}>
           {planets.map((planet) => (
@@ -373,7 +418,7 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
@@ -439,6 +484,18 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     fontWeight: '500',
+  },
+  zoomIndicator: {
+    padding: '10px 20px',
+    background: 'rgba(244, 114, 182, 0.2)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(244, 114, 182, 0.4)',
+    borderRadius: '12px',
+    color: 'white',
+    fontSize: '13px',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    userSelect: 'none',
   },
   infoPanel: {
     position: 'absolute',
@@ -528,6 +585,20 @@ const styles: Record<string, React.CSSProperties> = {
     lineHeight: '1.6',
     margin: 0,
     fontStyle: 'italic',
+  },
+  aiChatButton: {
+    marginTop: '20px',
+    padding: '12px 20px',
+    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+    border: 'none',
+    borderRadius: '12px',
+    color: 'white',
+    fontSize: '14px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    width: '100%',
+    transition: 'all 0.3s ease',
+    boxShadow: '0 4px 12px rgba(102,126,234,0.3)',
   },
   closeButton: {
     position: 'absolute',

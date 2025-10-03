@@ -208,22 +208,23 @@ export const MilkyWay: React.FC = () => {
         <div style={styles.searchBoxWrapper}>
           <SearchBar onSearch={handleSearch} />
         </div>
-        {/* Botón KIDS - Sistema Solar */}
-        <button 
-          style={styles.kidsButton}
+        {/* Imagen KIDS - Sistema Solar */}
+        <img 
+          src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
+          alt="Sistema Solar" 
+          style={styles.kidsImage}
           onClick={() => setShowSolarSystem(true)}
           title="¡Explora el Sistema Solar!"
-        >
-          <img 
-            src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
-            alt="Kids Mode" 
-            style={styles.kidsImage}
-            onError={(e) => {
-              e.currentTarget.style.display = 'none';
-              e.currentTarget.parentElement!.textContent = '🪐 KIDS';
-            }}
-          />
-        </button>
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'scale(1.1)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = 'scale(1)';
+          }}
+          onError={(e) => {
+            e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Ctext y="32" font-size="32"%3E🪐%3C/text%3E%3C/svg%3E';
+          }}
+        />
       </div>
 
       {/* Botón de menú lateral (ejemplos) */}
@@ -430,27 +431,15 @@ const styles: Record<string, React.CSSProperties> = {
     transition: 'all 0.2s',
   },
 
-  // Botón Sistema Solar
-  kidsButton: {
-    padding: '8px 16px',
-    background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 50%, #3b82f6 100%)',
-    border: '2px solid rgba(255, 255, 255, 0.3)',
-    borderRadius: '16px',
-    cursor: 'pointer',
-    boxShadow: '0 4px 12px rgba(244, 114, 182, 0.4)',
-    transition: 'all 0.3s',
-    animation: 'glow 2s ease-in-out infinite alternate',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexShrink: 0,
-  },
-  
-  // Imagen del botón KIDS
+  // Imagen KIDS - Sistema Solar (clickeable)
   kidsImage: {
-    height: '40px',
+    height: '48px',
     width: 'auto',
     display: 'block',
+    borderRadius: '8px',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    flexShrink: 0,
   },
   
   // Panel lateral de ejemplos

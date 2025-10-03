@@ -265,7 +265,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontSize: '16px',
     fontWeight: 600,
     cursor: 'pointer',
-    transition: 'transform 0.2s, box-shadow 0.2s',
+    transition: 'transform 0.2s',
   },
   solarSystem: {
     padding: '40px 20px',
