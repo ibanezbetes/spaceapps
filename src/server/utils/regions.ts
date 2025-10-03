@@ -205,7 +205,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 360,
     dec_min: -15,
     dec_max: 15,
-    icon: '💿',
+    icon: '',
   },
 
   // ========================================================================
@@ -218,7 +218,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 360,
     dec_min: 60,
     dec_max: 90,
-    icon: '🧭',
+    icon: '',
   },
   {
     name: 'Polo Sur Galáctico',
@@ -227,7 +227,7 @@ export const ASTRONOMICAL_REGIONS: AstronomicalRegion[] = [
     ra_max: 360,
     dec_min: -90,
     dec_max: -60,
-    icon: '🧭',
+    icon: '',
   },
 
   // ========================================================================

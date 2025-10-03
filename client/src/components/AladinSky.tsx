@@ -47,7 +47,7 @@ export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onC
       if (containerRef.current) {
         const aladinContainer = containerRef.current;
         
-        // 1. Ocultar completamente el botón/menú de Stack (overlays)
+        // 1. Ocultar completamente el botón/menú de Stack (overlays) y controles de zoom/FOV
         const hideStackControls = () => {
           // Buscar todos los posibles selectores del control de Stack
           const stackSelectors = [
@@ -57,6 +57,10 @@ export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onC
             'button[title*="Stack"]',
             'div[title*="overlay" i]',
             'button[title*="overlay" i]',
+            '.aladin-fov', // Control de zoom y FOV
+            '.aladin-horizontal-list.aladin-fov', // Contenedor completo del FOV
+            '.aladin-zoom-in', // Botón zoom in
+            '.aladin-zoom-out', // Botón zoom out
           ];
           
           stackSelectors.forEach(selector => {
