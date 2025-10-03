@@ -2,17 +2,77 @@
  * Página principal del Milky Way Explorer
  */
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { AladinSky } from '../components/AladinSky';
 import { SearchBar } from '../components/SearchBar';
 import { ClickPopup } from '../components/ClickPopup';
+import { SolarSystemMap } from '../components/SolarSystemMap';
 
 export const MilkyWay: React.FC = () => {
+  // Añadir animaciones CSS
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes glow {
+        from {
+          box-shadow: 0 4px 12px rgba(244, 114, 182, 0.4);
+        }
+        to {
+          box-shadow: 0 4px 20px rgba(244, 114, 182, 0.8), 0 0 30px rgba(168, 85, 247, 0.4);
+        }
+      }
+      
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      @keyframes scaleIn {
+        from {
+          opacity: 0;
+          transform: scale(0.8);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      
+      @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      
+      @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.7; }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   // Estado de la vista
   const [ra, setRa] = useState(266.41683); // Centro Galáctico por defecto
   const [dec, setDec] = useState(-29.00781);
   const [fov, setFov] = useState(6);
+  
+  // Estado de modo Sistema Solar
+  const [showSolarSystem, setShowSolarSystem] = useState(false);
   
   // Estado de info
   const [searchResult, setSearchResult] = useState<any>(null);
@@ -114,6 +174,11 @@ export const MilkyWay: React.FC = () => {
     { name: 'Nebulosa de Carina', ra: 161.265, dec: -59.868, fov: 2 },
   ];
 
+  // Si está en modo Sistema Solar, mostrar el mapa interactivo
+  if (showSolarSystem) {
+    return <SolarSystemMap onClose={() => setShowSolarSystem(false)} />;
+  }
+
   return (
     <div style={styles.container}>
       {/* Mapa de fondo (fullscreen) */}
@@ -144,6 +209,15 @@ export const MilkyWay: React.FC = () => {
           <SearchBar onSearch={handleSearch} />
         </div>
       </div>
+
+      {/* Botón KIDS - Sistema Solar */}
+      <button 
+        style={styles.kidsButton}
+        onClick={() => setShowSolarSystem(true)}
+        title="¡Explora el Sistema Solar!"
+      >
+        🪐 Sistema Solar
+      </button>
 
       {/* Botón de menú lateral (ejemplos) */}
       <button 
@@ -347,6 +421,25 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     transition: 'all 0.2s',
+  },
+
+  // Botón Sistema Solar
+  kidsButton: {
+    position: 'absolute',
+    bottom: '30px',
+    left: '16px',
+    padding: '12px 24px',
+    background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 50%, #3b82f6 100%)',
+    border: '2px solid rgba(255, 255, 255, 0.3)',
+    borderRadius: '24px',
+    fontSize: '16px',
+    fontWeight: 'bold',
+    color: 'white',
+    cursor: 'pointer',
+    boxShadow: '0 4px 12px rgba(244, 114, 182, 0.4)',
+    zIndex: 1001,
+    transition: 'all 0.3s',
+    animation: 'glow 2s ease-in-out infinite alternate',
   },
   
   // Panel lateral de ejemplos
