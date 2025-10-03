@@ -7,8 +7,7 @@ import express from 'express';
 const router = express.Router();
 
 // Configuración de Gemini
-const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
-const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent';
+const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
 interface ChatRequest {
   message: string;
@@ -29,16 +28,26 @@ router.post('/chat', async (req, res) => {
   try {
     const { message, context, history = [] }: ChatRequest = req.body;
 
+    console.log('[AI CHAT] Nueva petición:', { message: message.substring(0, 50), hasContext: !!context });
+
     if (!message) {
       return res.status(400).json({ error: 'El mensaje es requerido' });
     }
 
+    // Leer la API key en tiempo de ejecución
+    const GEMINI_API_KEY = process.env.GEMINI_API_KEY || '';
+
     // Si no hay API key, devolver mensaje de error amigable
     if (!GEMINI_API_KEY) {
+      console.error('[AI CHAT] API Key no configurada');
+      console.error('[AI CHAT] process.env.GEMINI_API_KEY:', process.env.GEMINI_API_KEY);
+      console.error('[AI CHAT] Todas las env vars:', Object.keys(process.env).filter(k => k.includes('GEMINI')));
       return res.status(503).json({
         response: 'Lo siento, el servicio de chat IA no está configurado. Por favor, configura GEMINI_API_KEY en las variables de entorno.',
       });
     }
+
+    console.log('[AI CHAT] API Key disponible:', GEMINI_API_KEY.substring(0, 10) + '...');
 
     // Construir el contexto para la IA
     let systemPrompt = `Eres un asistente astronómico experto y amigable. Tu trabajo es ayudar a usuarios a entender objetos y regiones del universo.`;
@@ -80,10 +89,12 @@ router.post('/chat', async (req, res) => {
     });
 
     // Llamar a la API de Gemini
-    const response = await fetch(`${GEMINI_API_URL}?key=${GEMINI_API_KEY}`, {
+    console.log('[AI CHAT] Llamando a Gemini API...');
+    const response = await fetch(GEMINI_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-goog-api-key': GEMINI_API_KEY,
       },
       body: JSON.stringify({
         contents,
@@ -114,20 +125,25 @@ router.post('/chat', async (req, res) => {
       }),
     });
 
+    console.log('[AI CHAT] Respuesta de Gemini - Status:', response.status);
+
     if (!response.ok) {
       const errorData = await response.json();
-      console.error('[AI CHAT] Error de Gemini:', errorData);
-      throw new Error(`Error de Gemini: ${response.status}`);
+      console.error('[AI CHAT] Error de Gemini:', JSON.stringify(errorData, null, 2));
+      throw new Error(`Error de Gemini: ${response.status} - ${JSON.stringify(errorData)}`);
     }
 
     const data: any = await response.json();
+    console.log('[AI CHAT] Datos recibidos:', JSON.stringify(data, null, 2));
 
     // Extraer la respuesta
     const aiResponse = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Lo siento, no pude generar una respuesta.';
 
+    console.log('[AI CHAT] Respuesta generada exitosamente');
     res.json({ response: aiResponse });
   } catch (error) {
-    console.error('[AI CHAT] Error:', error);
+    console.error('[AI CHAT] Error completo:', error);
+    console.error('[AI CHAT] Stack trace:', (error as Error).stack);
     res.status(500).json({
       response: 'Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo más tarde.',
     });

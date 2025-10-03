@@ -2,19 +2,20 @@
  * Servidor Express principal para Bug Lightyear
  */
 
+import dotenv from 'dotenv';
+
+// Cargar variables de entorno PRIMERO, antes que cualquier otra cosa
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import dotenv from 'dotenv';
 
 // Importar rutas
 import searchRouter from './routes/search';
 import cutoutsRouter from './routes/cutouts';
 import catalogsRouter from './routes/catalogs';
 import aiRouter from './routes/ai';
-
-// Cargar variables de entorno
-dotenv.config();
 
 const app = express();
 const PORT = parseInt(process.env.PORT || '3000', 10);
