@@ -208,16 +208,23 @@ export const MilkyWay: React.FC = () => {
         <div style={styles.searchBoxWrapper}>
           <SearchBar onSearch={handleSearch} />
         </div>
+        {/* Botón KIDS - Sistema Solar */}
+        <button 
+          style={styles.kidsButton}
+          onClick={() => setShowSolarSystem(true)}
+          title="¡Explora el Sistema Solar!"
+        >
+          <img 
+            src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
+            alt="Kids Mode" 
+            style={styles.kidsImage}
+            onError={(e) => {
+              e.currentTarget.style.display = 'none';
+              e.currentTarget.parentElement!.textContent = '🪐 KIDS';
+            }}
+          />
+        </button>
       </div>
-
-      {/* Botón KIDS - Sistema Solar */}
-      <button 
-        style={styles.kidsButton}
-        onClick={() => setShowSolarSystem(true)}
-        title="¡Explora el Sistema Solar!"
-      >
-        🪐 Sistema Solar
-      </button>
 
       {/* Botón de menú lateral (ejemplos) */}
       <button 
@@ -425,21 +432,25 @@ const styles: Record<string, React.CSSProperties> = {
 
   // Botón Sistema Solar
   kidsButton: {
-    position: 'absolute',
-    bottom: '30px',
-    left: '16px',
-    padding: '12px 24px',
+    padding: '8px 16px',
     background: 'linear-gradient(135deg, #f472b6 0%, #a855f7 50%, #3b82f6 100%)',
     border: '2px solid rgba(255, 255, 255, 0.3)',
-    borderRadius: '24px',
-    fontSize: '16px',
-    fontWeight: 'bold',
-    color: 'white',
+    borderRadius: '16px',
     cursor: 'pointer',
     boxShadow: '0 4px 12px rgba(244, 114, 182, 0.4)',
-    zIndex: 1001,
     transition: 'all 0.3s',
     animation: 'glow 2s ease-in-out infinite alternate',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexShrink: 0,
+  },
+  
+  // Imagen del botón KIDS
+  kidsImage: {
+    height: '40px',
+    width: 'auto',
+    display: 'block',
   },
   
   // Panel lateral de ejemplos
