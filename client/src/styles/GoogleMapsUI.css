@@ -10,6 +10,7 @@ div[title*="Galactic"],
 button[title*="ICRS"],
 button[title*="Galactic"],
 /* Selector para el botón Stack - OCULTAR COMPLETAMENTE */
+/* Ocultar el menú de overlays (Stack) y su contenedor */
 .aladin-stack-control,
 div[title*="Stack"],
 button[title*="Stack"],
@@ -18,6 +19,18 @@ button[title*="Stack"],
 .aladin-box .aladin-stack-control,
 [class*="stack-control"],
 [class*="aladin-stack"],
+div[class*="stack"],
+button[class*="stack"],
+.aladin-stackControl,
+/* Ocultar el div contenedor del menú de overlays */
+.aladin-stack-control-container,
+div.aladin-stack-control-container,
+.aladin-layersControl,
+div.aladin-layersControl,
+/* Buscar por el texto "overlays" en los atributos */
+div[title*="overlay" i],
+button[title*="overlay" i],
+div[title*="layer" i]:not(.aladin-layersControl-container),
 /* También ocultar el selector de coordenadas si aparece */
 .aladin-select-box,
 /* Ocultar botón de pantalla completa */
@@ -82,11 +95,38 @@ div.aladin-projection-control,
 }
 
 /* Botones dentro del control de proyección */
+/* Hacer que el selector y botones internos se vean como parte del input */
 button.aladin-btn[title*="projection"],
-button.aladin-btn[title*="Projection"] {
-  background: rgba(30, 30, 30, 0.95) !important;
+button.aladin-btn[title*="Projection"],
+.aladin-projection-control button,
+.aladin-projection-control select,
+.aladin-projection-control input {
+  background: transparent !important;
   border: none !important;
   color: #e0e6ed !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  cursor: pointer !important;
+  outline: none !important;
+  font-family: inherit !important;
+  height: auto !important;
+  line-height: normal !important;
+}
+
+/* Estilo para el select (dropdown) de proyección */
+.aladin-projection-control select {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  background-image: none !important;
+  padding-right: 8px !important;
+}
+
+/* Ocultar la flecha del select si aparece */
+.aladin-projection-control select::-ms-expand {
+  display: none !important;
 }
 
 .aladin-projection-control:hover,
@@ -196,4 +236,32 @@ button.aladin-btn[title*="projection"]:hover {
 .survey-chip:hover {
   background: rgba(102, 126, 234, 0.3) !important;
   transform: translateY(-1px);
+}
+
+/* Estilos adicionales para elementos internos del control de proyección */
+/* Forzar que todos los elementos hijos tengan el estilo correcto */
+.aladin-projection-control *,
+div.aladin-projection-control *,
+#aladin-lite-div .aladin-projection-control * {
+  color: #e0e6ed !important;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+/* Asegurar que el texto dentro del control de proyección sea visible */
+.aladin-projection-control span,
+.aladin-projection-control label,
+.aladin-projection-control option {
+  color: #e0e6ed !important;
+  background: rgba(30, 30, 30, 0.95) !important;
+}
+
+/* Estilo para opciones del dropdown cuando está abierto */
+.aladin-projection-control select option {
+  background: rgba(30, 30, 30, 0.98) !important;
+  color: #e0e6ed !important;
+  padding: 8px 12px !important;
+}
+
+.aladin-projection-control select option:hover {
+  background: rgba(45, 45, 45, 0.98) !important;
 }

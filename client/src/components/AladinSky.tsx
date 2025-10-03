@@ -42,6 +42,107 @@ export const AladinSky: React.FC<AladinSkyProps> = ({ ra, dec, fov, onReady, onC
     // Guardar referencia
     aladinRef.current = aladin;
 
+    // Manipular el DOM después de que Aladin se inicialice
+    setTimeout(() => {
+      if (containerRef.current) {
+        const aladinContainer = containerRef.current;
+        
+        // 1. Ocultar completamente el botón/menú de Stack (overlays)
+        const hideStackControls = () => {
+          // Buscar todos los posibles selectores del control de Stack
+          const stackSelectors = [
+            '.aladin-stack-control',
+            '.aladin-stackControl',
+            'div[title*="Stack"]',
+            'button[title*="Stack"]',
+            'div[title*="overlay" i]',
+            'button[title*="overlay" i]',
+          ];
+          
+          stackSelectors.forEach(selector => {
+            const elements = aladinContainer.querySelectorAll(selector);
+            elements.forEach((el: any) => {
+              el.style.display = 'none';
+              el.style.visibility = 'hidden';
+              el.style.opacity = '0';
+              el.style.pointerEvents = 'none';
+            });
+          });
+        };
+        
+        // 2. Aplicar estilos al botón de proyección (AIT)
+        const styleProjectionControl = () => {
+          const projectionSelectors = [
+            '.aladin-projection-control',
+            'div.aladin-projection-control',
+            'button[title*="projection" i]',
+          ];
+          
+          projectionSelectors.forEach(selector => {
+            const elements = aladinContainer.querySelectorAll(selector);
+            elements.forEach((el: any) => {
+              // Aplicar estilos del contenedor
+              el.style.position = 'absolute';
+              el.style.top = '16px';
+              el.style.right = '16px';
+              el.style.left = 'auto';
+              el.style.zIndex = '1000';
+              el.style.background = 'rgba(30, 30, 30, 0.95)';
+              el.style.border = '1px solid rgba(255, 255, 255, 0.1)';
+              el.style.borderRadius = '8px';
+              el.style.boxShadow = '0 2px 8px rgba(0,0,0,0.3)';
+              el.style.padding = '14px 20px';
+              el.style.height = '48px';
+              el.style.boxSizing = 'border-box';
+              el.style.fontSize = '14px';
+              el.style.color = '#e0e6ed';
+              el.style.fontWeight = '500';
+              el.style.cursor = 'pointer';
+              el.style.transition = 'all 0.2s';
+              el.style.backdropFilter = 'blur(10px)';
+              el.style.display = 'flex';
+              el.style.alignItems = 'center';
+              
+              // Estilizar elementos internos (select, button, etc)
+              const innerElements = el.querySelectorAll('select, button, input, span');
+              innerElements.forEach((inner: any) => {
+                inner.style.background = 'transparent';
+                inner.style.border = 'none';
+                inner.style.color = '#e0e6ed';
+                inner.style.fontSize = '14px';
+                inner.style.fontWeight = '500';
+                inner.style.outline = 'none';
+              });
+            });
+          });
+        };
+        
+        // Ejecutar inmediatamente
+        hideStackControls();
+        styleProjectionControl();
+        
+        // Re-ejecutar después de un tiempo para asegurar que se apliquen
+        setTimeout(() => {
+          hideStackControls();
+          styleProjectionControl();
+        }, 500);
+        
+        // Observar cambios en el DOM por si Aladin añade elementos dinámicamente
+        const observer = new MutationObserver(() => {
+          hideStackControls();
+          styleProjectionControl();
+        });
+        
+        observer.observe(aladinContainer, {
+          childList: true,
+          subtree: true,
+        });
+        
+        // Cleanup del observer
+        return () => observer.disconnect();
+      }
+    }, 100);
+
     // Click handler
     if (onClick) {
       aladin.on('click', (e: any) => {
