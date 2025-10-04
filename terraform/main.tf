@@ -57,6 +57,8 @@ module "ec2" {
   create_eip          = var.create_eip
   docker_image        = var.docker_image
   gemini_api_key      = var.gemini_api_key
+  # CORS origin para el backend: URL del sitio en S3
+  frontend_url        = module.s3_website.website_endpoint
 }
 
 # -----------------------------

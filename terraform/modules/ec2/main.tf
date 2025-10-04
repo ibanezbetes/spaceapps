@@ -8,6 +8,7 @@ variable "root_volume_size" { type = number }
 variable "create_eip" { type = bool }
 variable "docker_image" { type = string }
 variable "gemini_api_key" { type = string }
+variable "frontend_url" { type = string }
 
 # AMI Amazon Linux 2023 x86_64
 data "aws_ami" "al2023" {
@@ -35,6 +36,7 @@ locals {
               usermod -a -G docker ec2-user
 
               echo GEMINI_API_KEY=${var.gemini_api_key} >> /etc/environment
+              echo FRONTEND_URL=${var.frontend_url} >> /etc/environment
 
               # Clonar repo y construir imagen si no se especifica docker_image
               if [ -z "${var.docker_image}" ]; then
@@ -53,6 +55,7 @@ locals {
                 -p 80:${var.app_port} \
                 -p ${var.app_port}:${var.app_port} \
                 -e GEMINI_API_KEY=${var.gemini_api_key} \
+                -e FRONTEND_URL=${var.frontend_url} \
                 ${IMAGE_TO_RUN}
 
               EOT
