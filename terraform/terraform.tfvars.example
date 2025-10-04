@@ -1,0 +1,29 @@
+# Terraform variables example
+
+aws_region       = "us-east-1"
+project_name     = "bug-lightyear"
+environment      = "prod"
+
+# Networking
+vpc_cidr_block     = "10.0.0.0/16"
+public_subnet_cidr = "10.0.1.0/24"
+
+# Security
+allowed_ips = ["YOUR.PUBLIC.IP.ADDR/32"]
+
+# EC2
+instance_type    = "t3.small"
+existing_key_name = "bug-lightyear-key"
+app_port         = 3000
+root_volume_size = 20
+create_eip       = true
+
+# Docker image (optional). If empty, EC2 will build from repo
+# docker_image = "ghcr.io/your/repo:tag"
+
+gemini_api_key = ""
+
+# S3 Website
+# Leave empty to auto-generate bucket name with random suffix
+s3_bucket_name  = ""
+upload_frontend = true
