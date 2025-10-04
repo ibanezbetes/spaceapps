@@ -10,6 +10,7 @@ interface AIChatProps {
   ra: number;
   dec: number;
   onClose: () => void;
+  isKidsMode?: boolean; // Modo para niños (Sistema Solar)
 }
 
 interface Message {
@@ -23,6 +24,7 @@ export const AIChat: React.FC<AIChatProps> = ({
   ra,
   dec,
   onClose,
+  isKidsMode = false,
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState('');
@@ -142,6 +144,7 @@ export const AIChat: React.FC<AIChatProps> = ({
             dec,
           },
           history: messages,
+          isKidsMode, // Indicar si es modo niños
         }),
       });
 
@@ -180,7 +183,7 @@ export const AIChat: React.FC<AIChatProps> = ({
         {/* Header */}
         <div style={styles.header}>
           <h3 className="ai-chat-title" style={styles.title}>
-            Pregunta sobre {regionName || 'esta región'}
+            {isKidsMode ? `🚀 Hablemos sobre ${regionName || 'el espacio'}` : `Pregunta sobre ${regionName || 'esta región'}`}
           </h3>
           <button style={styles.closeButton} onClick={onClose}>
             ×
@@ -192,13 +195,26 @@ export const AIChat: React.FC<AIChatProps> = ({
           {messages.length === 0 && (
             <div className="ai-chat-welcome" style={styles.welcomeMessage}>
               <p style={styles.welcomeText}>
-                ¡Hola! Soy tu asistente astronómico. Puedes preguntarme sobre:
+                {isKidsMode 
+                  ? '¡Hola pequeño explorador! 🌟 Soy tu amigo astronauta. Puedes preguntarme cosas como:'
+                  : '¡Hola! Soy tu asistente astronómico. Puedes preguntarme sobre:'}
               </p>
               <ul style={styles.examplesList}>
-                <li>¿Qué objetos interesantes hay aquí?</li>
-                <li>¿Cómo se formó esta región?</li>
-                <li>¿Qué distancia hay desde la Tierra?</li>
-                <li>¿Qué puedo observar con un telescopio?</li>
+                {isKidsMode ? (
+                  <>
+                    <li>¿Por qué {regionName || 'este planeta'} es de ese color?</li>
+                    <li>¿Qué hace que {regionName || 'este planeta'} sea especial?</li>
+                    <li>¿Podría vivir en {regionName || 'este planeta'}?</li>
+                    <li>¿Cuánto tiempo tardaría en llegar ahí?</li>
+                  </>
+                ) : (
+                  <>
+                    <li>¿Qué objetos interesantes hay aquí?</li>
+                    <li>¿Cómo se formó esta región?</li>
+                    <li>¿Qué distancia hay desde la Tierra?</li>
+                    <li>¿Qué puedo observar con un telescopio?</li>
+                  </>
+                )}
               </ul>
             </div>
           )}
@@ -235,7 +251,7 @@ export const AIChat: React.FC<AIChatProps> = ({
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
-            placeholder="Escribe tu pregunta..."
+            placeholder={isKidsMode ? "¿Qué quieres saber? 🤔" : "Escribe tu pregunta..."}
             style={styles.input}
             disabled={loading}
           />

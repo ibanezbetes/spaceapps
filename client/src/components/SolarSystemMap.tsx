@@ -502,6 +502,7 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
           ra={0}
           dec={0}
           onClose={() => setShowChat(false)}
+          isKidsMode={true}
         />
       )}
 

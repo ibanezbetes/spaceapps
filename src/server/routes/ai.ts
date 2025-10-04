@@ -18,6 +18,7 @@ interface ChatRequest {
     dec: number;
   };
   history?: Array<{ role: string; content: string }>;
+  isKidsMode?: boolean; // Modo para niños
 }
 
 /**
@@ -26,9 +27,13 @@ interface ChatRequest {
  */
 router.post('/chat', async (req, res) => {
   try {
-    const { message, context, history = [] }: ChatRequest = req.body;
+    const { message, context, history = [], isKidsMode = false }: ChatRequest = req.body;
 
-    console.log('[AI CHAT] Nueva petición:', { message: message.substring(0, 50), hasContext: !!context });
+    console.log('[AI CHAT] Nueva petición:', { 
+      message: message.substring(0, 50), 
+      hasContext: !!context,
+      isKidsMode 
+    });
 
     if (!message) {
       return res.status(400).json({ error: 'El mensaje es requerido' });
@@ -50,17 +55,42 @@ router.post('/chat', async (req, res) => {
     console.log('[AI CHAT] API Key disponible:', GEMINI_API_KEY.substring(0, 10) + '...');
 
     // Construir el contexto para la IA
-    let systemPrompt = `Eres un asistente astronómico experto y amigable. Tu trabajo es ayudar a usuarios a entender objetos y regiones del universo.`;
+    let systemPrompt = '';
     
-    if (context?.regionName) {
-      systemPrompt += `\n\nEl usuario está preguntando sobre: ${context.regionName}`;
-      if (context.regionDescription) {
-        systemPrompt += `\nDescripción: ${context.regionDescription}`;
-      }
-      systemPrompt += `\nCoordenadas: RA=${context.ra.toFixed(4)}°, Dec=${context.dec.toFixed(4)}°`;
-    }
+    if (isKidsMode) {
+      // Prompt especializado para niños
+      systemPrompt = `Eres un astronauta amigable y entusiasta que le enseña sobre el espacio a niños de 6 a 12 años. 
 
-    systemPrompt += `\n\nResponde de forma clara, educativa y entusiasta. Usa términos técnicos cuando sea apropiado pero explícalos. Sé conciso pero informativo (máximo 200 palabras).`;
+IMPORTANTE:
+- Usa lenguaje simple y divertido, como si hablaras con un amigo pequeño
+- Evita términos muy técnicos, o explícalos con comparaciones que los niños entiendan
+- Usa emojis ocasionalmente para hacer las respuestas más divertidas (🌟🚀🪐✨)
+- Haz comparaciones con cosas que los niños conocen (tamaño de pelotas, distancias en autos, etc.)
+- Sé entusiasta y motivador, haciendo que el espacio parezca increíble
+- Respuestas cortas (máximo 150 palabras)
+- Usa frases como "¿Sabías que...?", "¡Imagínate que...!", "¡Es súper interesante porque...!"
+- Si hablas de números grandes, usa comparaciones: "tantas como granos de arena en una playa"`;
+      
+      if (context?.regionName) {
+        systemPrompt += `\n\n¡El niño está explorando ${context.regionName}!`;
+        if (context.regionDescription) {
+          systemPrompt += `\nInformación: ${context.regionDescription}`;
+        }
+      }
+    } else {
+      // Prompt original para modo adulto/científico
+      systemPrompt = `Eres un asistente astronómico experto y amigable. Tu trabajo es ayudar a usuarios a entender objetos y regiones del universo.`;
+      
+      if (context?.regionName) {
+        systemPrompt += `\n\nEl usuario está preguntando sobre: ${context.regionName}`;
+        if (context.regionDescription) {
+          systemPrompt += `\nDescripción: ${context.regionDescription}`;
+        }
+        systemPrompt += `\nCoordenadas: RA=${context.ra.toFixed(4)}°, Dec=${context.dec.toFixed(4)}°`;
+      }
+
+      systemPrompt += `\n\nResponde de forma clara, educativa y entusiasta. Usa términos técnicos cuando sea apropiado pero explícalos. Sé conciso pero informativo (máximo 200 palabras).`;
+    }
 
     // Construir el historial de conversación para Gemini
     const contents = [
@@ -70,7 +100,11 @@ router.post('/chat', async (req, res) => {
       },
       {
         role: 'model',
-        parts: [{ text: '¡Entendido! Estoy listo para ayudarte a explorar el universo.' }],
+        parts: [{ 
+          text: isKidsMode 
+            ? '¡Hola pequeño explorador! 🚀 ¡Estoy súper emocionado de ayudarte a descubrir los secretos del espacio! ✨' 
+            : '¡Entendido! Estoy listo para ayudarte a explorar el universo.' 
+        }],
       },
     ];
 
