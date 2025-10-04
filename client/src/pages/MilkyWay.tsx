@@ -59,6 +59,239 @@ export const MilkyWay: React.FC = () => {
         0%, 100% { opacity: 1; }
         50% { opacity: 0.7; }
       }
+
+      /* ========================================
+         RESPONSIVE DESIGN - MOBILE
+         ======================================== */
+      
+      /* Tablets y pantallas medianas (hasta 768px) */
+      @media (max-width: 768px) {
+        .search-container {
+          top: 12px !important;
+          max-width: calc(100% - 80px) !important;
+          gap: 8px !important;
+        }
+
+        .logo-container {
+          padding: 6px 12px !important;
+          height: 40px !important;
+        }
+
+        .logo-text {
+          font-size: 14px !important;
+        }
+
+        .logo-image {
+          height: 32px !important;
+        }
+
+        .kids-image {
+          height: 40px !important;
+        }
+
+        .info-card {
+          bottom: 16px !important;
+          left: 16px !important;
+          width: calc(100% - 32px) !important;
+          max-width: 340px !important;
+        }
+
+        .side-panel {
+          width: 240px !important;
+        }
+      }
+
+      /* Móviles (hasta 480px) */
+      @media (max-width: 480px) {
+        /* Ocultar elementos DESKTOP completamente */
+        .menu-button-desktop,
+        .logo-container-desktop,
+        .kids-image-desktop {
+          display: none !important;
+          height: 0 !important;
+          width: 0 !important;
+          min-height: 0 !important;
+          min-width: 0 !important;
+          max-height: 0 !important;
+          max-width: 0 !important;
+          overflow: hidden !important;
+          opacity: 0 !important;
+          visibility: hidden !important;
+          position: absolute !important;
+          pointer-events: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          border: none !important;
+          flex: 0 !important;
+          flex-shrink: 0 !important;
+        }
+
+        .search-container {
+          flex-direction: column !important;
+          top: 8px !important;
+          left: 8px !important;
+          right: 8px !important;
+          transform: none !important;
+          max-width: none !important;
+          width: calc(100% - 16px) !important;
+          gap: 8px !important;
+          align-items: stretch !important;
+          padding: 0 !important;
+        }
+
+        /* Fila 1: Menú + Logo + Bug Lightyear */
+        .top-row-mobile {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: center !important;
+          gap: 8px !important;
+          width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .menu-button {
+          position: static !important;
+          width: 44px !important;
+          height: 44px !important;
+          font-size: 18px !important;
+          flex-shrink: 0 !important;
+        }
+
+        .logo-container-mobile {
+          flex: 1 !important;
+          width: auto !important;
+          justify-content: flex-start !important;
+          padding: 8px 12px !important;
+          height: 44px !important;
+          display: flex !important;
+        }
+
+        .logo-text {
+          font-size: 15px !important;
+        }
+
+        .logo-image {
+          height: 36px !important;
+        }
+
+        /* OCULTAR completamente elementos desktop en mobile */
+        .kids-image-desktop {
+          display: none !important;
+          visibility: hidden !important;
+          opacity: 0 !important;
+          position: absolute !important;
+          width: 0 !important;
+          height: 0 !important;
+          pointer-events: none !important;
+          overflow: hidden !important;
+          order: -999 !important;
+          z-index: -999 !important;
+        }
+
+        /* Fila 2: Barra de búsqueda */
+        .search-box-wrapper {
+          width: 100% !important;
+          order: 2 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          flex: none !important;
+        }
+
+        /* Fila 3: KIDS + AIT */
+        .bottom-row-mobile {
+          display: flex !important;
+          flex-direction: row !important;
+          gap: 8px !important;
+          width: 100% !important;
+          order: 3 !important;
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .kids-image-mobile {
+          position: static !important;
+          height: 44px !important;
+          width: auto !important;
+          flex: 1 !important;
+          object-fit: contain !important;
+          background: rgba(30, 30, 30, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          padding: 4px !important;
+          border-radius: 8px !important;
+          display: block !important;
+        }
+
+        .ait-button {
+          height: 44px !important;
+          flex: 1 !important;
+          background: rgba(30, 30, 30, 0.95) !important;
+          border: 1px solid rgba(255, 255, 255, 0.1) !important;
+          border-radius: 8px !important;
+          color: #e0e6ed !important;
+          font-size: 14px !important;
+          font-weight: 600 !important;
+          cursor: pointer !important;
+          transition: all 0.2s !important;
+          padding: 8px 12px !important;
+        }
+
+        .side-panel {
+          top: auto !important;
+          margin-top: 180px !important;
+          left: 8px !important;
+          width: calc(100% - 16px) !important;
+          max-width: 280px !important;
+          max-height: calc(100vh - 200px) !important;
+        }
+
+        .info-card {
+          bottom: 8px !important;
+          left: 8px !important;
+          right: 8px !important;
+          width: calc(100% - 16px) !important;
+          max-width: none !important;
+          padding: 16px !important;
+        }
+
+        .info-card-title {
+          font-size: 16px !important;
+        }
+
+        .info-row {
+          font-size: 13px !important;
+        }
+
+        .survey-chip {
+          font-size: 11px !important;
+          padding: 5px 10px !important;
+        }
+      }
+
+      /* Móviles pequeños (hasta 360px) */
+      @media (max-width: 360px) {
+        .logo-text {
+          font-size: 14px !important;
+        }
+
+        .logo-image {
+          height: 32px !important;
+        }
+
+        .menu-button {
+          width: 36px !important;
+          height: 36px !important;
+          font-size: 16px !important;
+        }
+
+        .info-card {
+          padding: 12px !important;
+        }
+
+        .info-card-title {
+          font-size: 15px !important;
+        }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -90,6 +323,20 @@ export const MilkyWay: React.FC = () => {
   
   // Referencia a Aladin
   const aladinRef = useRef<any>(null);
+
+  // Detectar si es móvil
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 480);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const handleSearch = (result: any) => {
     console.log('[SEARCH RESULT]', result);
@@ -193,49 +440,112 @@ export const MilkyWay: React.FC = () => {
       </div>
 
       {/* Barra de búsqueda flotante superior (estilo Google Maps) */}
-      <div style={styles.searchContainer}>
-        <div style={styles.logoContainer}>
-          <img 
-            src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1ffb340c-45b5-4137-8b12-98f2fe9645c6/de4os45-1dc86668-425d-4ef8-9e09-8a1397b8d813.png/v1/fill/w_613,h_407/angry_buzz_lightyear__png__by_autism79_de4os45-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA3IiwicGF0aCI6Ii9mLzFmZmIzNDBjLTQ1YjUtNDEzNy04YjEyLTk4ZjJmZTk2NDVjNi9kZTRvczQ1LTFkYzg2NjY4LTQyNWQtNGVmOC05ZTA5LThhMTM5N2I4ZDgxMy5wbmciLCJ3aWR0aCI6Ijw9NjEzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.avoOwnHGD1paE2egJ7dayB-dJwG2WWglkGq8-bQSMI8" 
-            alt="Buzz Lightyear" 
-            style={styles.logoImage}
-            onError={(e) => {
-              e.currentTarget.src = 'https://i.imgur.com/7ZqKX5j.png';
-            }}
-          />
-          <span style={styles.logo}>Bug Lightyear</span>
-        </div>
-        <div style={styles.searchBoxWrapper}>
+      <div className="search-container" style={styles.searchContainer}>
+        {/* Logo + Bug Lightyear - visible SOLO en DESKTOP */}
+        {!isMobile && (
+          <div className="logo-container logo-container-desktop" style={styles.logoContainer}>
+            <img 
+              src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1ffb340c-45b5-4137-8b12-98f2fe9645c6/de4os45-1dc86668-425d-4ef8-9e09-8a1397b8d813.png/v1/fill/w_613,h_407/angry_buzz_lightyear__png__by_autism79_de4os45-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA3IiwicGF0aCI6Ii9mLzFmZmIzNDBjLTQ1YjUtNDEzNy04YjEyLTk4ZjJmZTk2NDVjNi9kZTRvczQ1LTFkYzg2NjY4LTQyNWQtNGVmOC05ZTA5LThhMTM5N2I4ZDgxMy5wbmciLCJ3aWR0aCI6Ijw9NjEzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.avoOwnHGD1paE2egJ7dayB-dJwG2WWglkGq8-bQSMI8" 
+              alt="Buzz Lightyear" 
+              className="logo-image"
+              style={styles.logoImage}
+              onError={(e) => {
+                e.currentTarget.src = 'https://i.imgur.com/7ZqKX5j.png';
+              }}
+            />
+            <span className="logo-text" style={styles.logo}>Bug Lightyear</span>
+          </div>
+        )}
+
+        {/* Fila 1 MÓVIL: Menú + Logo + Bug Lightyear */}
+        {isMobile && (
+          <div className="top-row-mobile" style={styles.topRowMobile}>
+            <button 
+              className="menu-button"
+              style={styles.menuButtonMobile}
+              onClick={() => setShowExamples(!showExamples)}
+              title="Ver ejemplos"
+            >
+              ≡
+            </button>
+            <div className="logo-container logo-container-mobile" style={styles.logoContainer}>
+              <img 
+                src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1ffb340c-45b5-4137-8b12-98f2fe9645c6/de4os45-1dc86668-425d-4ef8-9e09-8a1397b8d813.png/v1/fill/w_613,h_407/angry_buzz_lightyear__png__by_autism79_de4os45-fullview.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA3IiwicGF0aCI6Ii9mLzFmZmIzNDBjLTQ1YjUtNDEzNy04YjEyLTk4ZjJmZTk2NDVjNi9kZTRvczQ1LTFkYzg2NjY4LTQyNWQtNGVmOC05ZTA5LThhMTM5N2I4ZDgxMy5wbmciLCJ3aWR0aCI6Ijw9NjEzIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.avoOwnHGD1paE2egJ7dayB-dJwG2WWglkGq8-bQSMI8" 
+                alt="Buzz Lightyear" 
+                className="logo-image"
+                style={styles.logoImage}
+                onError={(e) => {
+                  e.currentTarget.src = 'https://i.imgur.com/7ZqKX5j.png';
+                }}
+              />
+              <span className="logo-text" style={styles.logo}>Bug Lightyear</span>
+            </div>
+          </div>
+        )}
+
+        {/* Fila 2: Barra de búsqueda */}
+        <div className="search-box-wrapper" style={styles.searchBoxWrapper}>
           <SearchBar onSearch={handleSearch} />
         </div>
-        {/* Imagen KIDS - Sistema Solar */}
-        <img 
-          src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
-          alt="Sistema Solar" 
-          style={styles.kidsImage}
-          onClick={() => setShowSolarSystem(true)}
-          title="¡Explora el Sistema Solar!"
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'scale(1.1)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = 'scale(1)';
-          }}
-          onError={(e) => {
-            e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Ctext y="32" font-size="32"%3E🪐%3C/text%3E%3C/svg%3E';
-          }}
-        />
+
+        {/* KIDS imagen - visible SOLO en DESKTOP */}
+        {!isMobile && (
+          <img 
+            src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
+            alt="Sistema Solar" 
+            className="kids-image kids-image-desktop"
+            style={styles.kidsImage}
+            onClick={() => setShowSolarSystem(true)}
+            title="¡Explora el Sistema Solar!"
+            onMouseEnter={(e) => {
+              e.currentTarget.style.transform = 'scale(1.1)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.transform = 'scale(1)';
+            }}
+            onError={(e) => {
+              e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Ctext y="32" font-size="32"%3E🪐%3C/text%3E%3C/svg%3E';
+            }}
+          />
+        )}
+
+        {/* Fila 3 MÓVIL: KIDS + AIT */}
+        {isMobile && (
+          <div className="bottom-row-mobile" style={styles.bottomRowMobile}>
+            <img 
+              src="https://raw.githubusercontent.com/ibanezbetes/spaceapps/main/kids.png" 
+              alt="Sistema Solar" 
+              className="kids-image kids-image-mobile"
+              style={styles.kidsImage}
+              onClick={() => setShowSolarSystem(true)}
+              title="¡Explora el Sistema Solar!"
+              onError={(e) => {
+                e.currentTarget.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="48" height="48"%3E%3Ctext y="32" font-size="32"%3E🪐%3C/text%3E%3C/svg%3E';
+              }}
+            />
+            <button
+              className="ait-button"
+              style={styles.aitButton}
+              onClick={() => alert('Proyección AIT - Próximamente')}
+              title="Cambiar proyección"
+            >
+              AIT
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Botón de menú lateral (ejemplos) */}
-      <button 
-        className="menu-button"
-        style={styles.menuButton}
-        onClick={() => setShowExamples(!showExamples)}
-        title="Ver ejemplos"
-      >
-        ≡
-      </button>
+      {/* Botón de menú lateral (visible solo en desktop) */}
+      {!isMobile && (
+        <button 
+          className="menu-button menu-button-desktop"
+          style={styles.menuButton}
+          onClick={() => setShowExamples(!showExamples)}
+          title="Ver ejemplos"
+        >
+          ≡
+        </button>
+      )}
 
       {/* Panel lateral de ejemplos (expandible) */}
       {showExamples && (
@@ -284,23 +594,23 @@ export const MilkyWay: React.FC = () => {
           >
             ×
           </button>
-          <h3 style={styles.infoCardTitle}>
+          <h3 className="info-card-title" style={styles.infoCardTitle}>
             {searchResult.note || 'Información'}
           </h3>
           <div style={styles.infoCardContent}>
-            <div style={styles.infoRow}>
+            <div className="info-row" style={styles.infoRow}>
               <span style={styles.infoLabel}>Tipo:</span>
               <span style={styles.infoValue}>{searchResult.type}</span>
             </div>
-            <div style={styles.infoRow}>
+            <div className="info-row" style={styles.infoRow}>
               <span style={styles.infoLabel}>RA:</span>
               <span style={styles.infoValue}>{searchResult.ra.toFixed(5)}°</span>
             </div>
-            <div style={styles.infoRow}>
+            <div className="info-row" style={styles.infoRow}>
               <span style={styles.infoLabel}>Dec:</span>
               <span style={styles.infoValue}>{searchResult.dec.toFixed(5)}°</span>
             </div>
-            <div style={styles.infoRow}>
+            <div className="info-row" style={styles.infoRow}>
               <span style={styles.infoLabel}>FOV:</span>
               <span style={styles.infoValue}>{searchResult.fov}°</span>
             </div>
@@ -440,6 +750,51 @@ const styles: Record<string, React.CSSProperties> = {
     cursor: 'pointer',
     transition: 'all 0.3s ease',
     flexShrink: 0,
+  },
+
+  // Fila superior móvil (Menú + Logo + Bug Lightyear) - oculta en desktop
+  topRowMobile: {
+    display: 'none',
+  },
+
+  // Botón de menú dentro de la fila móvil
+  menuButtonMobile: {
+    width: '44px',
+    height: '44px',
+    background: 'rgba(30, 30, 30, 0.95)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '8px',
+    fontSize: '20px',
+    color: '#e0e6ed',
+    cursor: 'pointer',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.2s',
+  },
+
+  // Fila inferior móvil (KIDS + AIT) - oculta en desktop
+  bottomRowMobile: {
+    display: 'none',
+  },
+
+  // Botón AIT
+  aitButton: {
+    height: '48px',
+    background: 'rgba(30, 30, 30, 0.95)',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
+    borderRadius: '8px',
+    color: '#e0e6ed',
+    fontSize: '16px',
+    fontWeight: 600,
+    cursor: 'pointer',
+    boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+    transition: 'all 0.2s',
+    padding: '8px 16px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   
   // Panel lateral de ejemplos

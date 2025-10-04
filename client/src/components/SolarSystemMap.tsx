@@ -28,8 +28,118 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
   const [scale, setScale] = useState(1);
   const [showOrbits, setShowOrbits] = useState(true);
   const [showChat, setShowChat] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>();
+
+  // Detectar si es móvil
+  useEffect(() => {
+    const checkMobile = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      // Ajustar scale inicial en móvil
+      if (mobile && scale === 1) {
+        setScale(0.6);
+      }
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  // Agregar estilos responsive
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      /* RESPONSIVE - SolarSystemMap */
+      @media (max-width: 768px) {
+        /* Ajustar header */
+        .solar-header {
+          top: 12px !important;
+          padding: 0 12px !important;
+        }
+
+        .solar-title {
+          font-size: 22px !important;
+        }
+
+        .solar-subtitle {
+          font-size: 13px !important;
+        }
+
+        /* Info panel - ocupar todo el ancho en mobile */
+        .solar-info-panel {
+          position: fixed !important;
+          top: auto !important;
+          bottom: 0 !important;
+          left: 0 !important;
+          right: 0 !important;
+          transform: none !important;
+          width: 100% !important;
+          max-height: 60vh !important;
+          border-radius: 20px 20px 0 0 !important;
+          padding: 20px !important;
+          box-sizing: border-box !important;
+        }
+
+        .solar-planet-emoji {
+          font-size: 48px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .solar-planet-name {
+          font-size: 22px !important;
+          margin-bottom: 12px !important;
+        }
+
+        .solar-planet-description {
+          font-size: 14px !important;
+          margin-bottom: 15px !important;
+        }
+
+        .solar-close-button {
+          bottom: 16px !important;
+          left: 16px !important;
+          padding: 12px 24px !important;
+          font-size: 14px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .solar-title {
+          font-size: 18px !important;
+        }
+
+        .solar-subtitle {
+          font-size: 12px !important;
+        }
+
+        .solar-info-panel {
+          max-height: 65vh !important;
+          padding: 16px !important;
+        }
+
+        .solar-planet-emoji {
+          font-size: 40px !important;
+        }
+
+        .solar-planet-name {
+          font-size: 20px !important;
+        }
+
+        .solar-close-button {
+          padding: 10px 20px !important;
+          font-size: 13px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   const planets: PlanetInfo[] = [
     {
@@ -303,11 +413,11 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
       />
 
       {/* Título */}
-      <div style={styles.header}>
-        <h1 style={styles.title}>
+      <div className="solar-header" style={styles.header}>
+        <h1 className="solar-title" style={styles.title}>
           Mapa Interactivo del Sistema Solar
         </h1>
-        <p style={styles.subtitle}>
+        <p className="solar-subtitle" style={styles.subtitle}>
           Haz clic en los planetas para aprender más
         </p>
       </div>
@@ -347,16 +457,16 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
 
       {/* Información del planeta seleccionado */}
       {selectedPlanet && (
-        <div style={styles.infoPanel}>
+        <div className="solar-info-panel" style={styles.infoPanel}>
           <button
             style={styles.closeInfoButton}
             onClick={() => setSelectedPlanet(null)}
           >
             ✕
           </button>
-          <div style={styles.planetEmoji}>{selectedPlanet.emoji}</div>
-          <h2 style={styles.planetName}>{selectedPlanet.name}</h2>
-          <p style={styles.planetDescription}>{selectedPlanet.description}</p>
+          <div className="solar-planet-emoji" style={styles.planetEmoji}>{selectedPlanet.emoji}</div>
+          <h2 className="solar-planet-name" style={styles.planetName}>{selectedPlanet.name}</h2>
+          <p className="solar-planet-description" style={styles.planetDescription}>{selectedPlanet.description}</p>
           
           <div style={styles.planetStats}>
             <div style={styles.stat}>
@@ -396,7 +506,7 @@ export const SolarSystemMap: React.FC<SolarSystemMapProps> = ({ onClose }) => {
       )}
 
       {/* Botón de cerrar */}
-      <button style={styles.closeButton} onClick={onClose}>
+      <button className="solar-close-button" style={styles.closeButton} onClick={onClose}>
         ← Volver al Mapa Galáctico
       </button>
 

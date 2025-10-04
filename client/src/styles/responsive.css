@@ -1,0 +1,202 @@
+/* ========================================
+   RESPONSIVE DESIGN - MOBILE STYLES
+   Bug Lightyear Explorer
+   ======================================== */
+
+/* Tablets y pantallas medianas (hasta 768px) */
+@media (max-width: 768px) {
+  /* Ajustes generales para tablets */
+  body {
+    font-size: 14px;
+  }
+
+  /* Asegurar que los elementos táctiles sean accesibles */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Móviles (hasta 480px) */
+@media (max-width: 480px) {
+  /* Reset de márgenes en móvil */
+  body {
+    font-size: 13px;
+  }
+
+  /* Prevenir zoom en inputs en iOS */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Hacer todos los elementos táctiles más grandes */
+  button,
+  a,
+  input[type="button"],
+  input[type="submit"] {
+    min-height: 48px;
+    padding: 12px 16px;
+    touch-action: manipulation;
+  }
+
+  /* Ajustar scrollbars en móvil */
+  ::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
+}
+
+/* Móviles pequeños (hasta 360px) */
+@media (max-width: 360px) {
+  body {
+    font-size: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+
+  h4 {
+    font-size: 14px;
+  }
+}
+
+/* Orientación landscape en móviles */
+@media (max-width: 768px) and (orientation: landscape) {
+  /* Ajustar elementos cuando el móvil está horizontal */
+  .search-container {
+    flex-direction: row !important;
+  }
+
+  .info-card {
+    max-height: 60vh !important;
+    overflow-y: auto !important;
+  }
+
+  .ai-chat-messages {
+    max-height: 40vh !important;
+  }
+}
+
+/* Soporte para dispositivos con notch (iPhone X, etc.) */
+@supports (padding: max(0px)) {
+  body {
+    padding-left: max(0px, env(safe-area-inset-left));
+    padding-right: max(0px, env(safe-area-inset-right));
+    padding-bottom: max(0px, env(safe-area-inset-bottom));
+  }
+
+  @media (max-width: 480px) {
+    .search-container {
+      padding-left: max(8px, env(safe-area-inset-left));
+      padding-right: max(8px, env(safe-area-inset-right));
+      padding-top: max(8px, env(safe-area-inset-top));
+    }
+
+    .info-card,
+    .click-popup,
+    .ai-chat-container {
+      padding-bottom: max(8px, env(safe-area-inset-bottom));
+    }
+  }
+}
+
+/* Prevenir selección de texto en elementos interactivos móviles */
+@media (max-width: 768px) {
+  button,
+  .menu-button,
+  .close-button,
+  .example-button {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+}
+
+/* Optimizaciones de rendimiento para móviles */
+@media (max-width: 768px) {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* Usar aceleración de hardware para animaciones */
+  .side-panel,
+  .info-card,
+  .click-popup,
+  .ai-chat-container {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    will-change: transform, opacity;
+  }
+}
+
+/* Mejoras de accesibilidad táctil */
+@media (hover: none) and (pointer: coarse) {
+  /* Dispositivos táctiles sin hover */
+  button:active,
+  .menu-button:active,
+  .example-button:active {
+    transform: scale(0.95);
+    transition: transform 0.1s;
+  }
+
+  /* Aumentar áreas de toque */
+  .close-button {
+    padding: 8px;
+  }
+}
+
+/* Modo oscuro nativo del sistema */
+@media (prefers-color-scheme: dark) {
+  /* Ya estamos en modo oscuro por defecto */
+}
+
+/* Reducir movimiento para usuarios con preferencias de accesibilidad */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Estilos para impresión */
+@media print {
+  .menu-button,
+  .close-button,
+  button {
+    display: none;
+  }
+
+  .info-card,
+  .click-popup {
+    border: 1px solid #000;
+    box-shadow: none;
+  }
+}

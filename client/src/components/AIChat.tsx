@@ -29,6 +29,81 @@ export const AIChat: React.FC<AIChatProps> = ({
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
+  // Añadir estilos responsive
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      @keyframes slideInFromBottom {
+        from {
+          transform: translateY(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
+      }
+
+      /* RESPONSIVE - AIChat */
+      @media (max-width: 768px) {
+        .ai-chat-container {
+          max-width: calc(100% - 32px) !important;
+          right: 16px !important;
+          bottom: 16px !important;
+          min-width: 300px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .ai-chat-container {
+          left: 8px !important;
+          right: 8px !important;
+          bottom: 8px !important;
+          min-width: auto !important;
+          max-width: none !important;
+        }
+
+        .ai-chat-title {
+          font-size: 14px !important;
+        }
+
+        .ai-chat-messages {
+          max-height: 250px !important;
+          min-height: 150px !important;
+          padding: 12px !important;
+        }
+
+        .ai-chat-message {
+          font-size: 13px !important;
+          padding: 8px 12px !important;
+        }
+
+        .ai-chat-input {
+          padding: 8px 12px !important;
+          font-size: 13px !important;
+        }
+
+        .ai-chat-send-button {
+          padding: 8px 16px !important;
+          font-size: 13px !important;
+        }
+
+        .ai-chat-welcome {
+          padding: 12px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -101,10 +176,10 @@ export const AIChat: React.FC<AIChatProps> = ({
 
   return (
     <div style={styles.overlay} onClick={onClose}>
-      <div style={styles.chatContainer} onClick={(e) => e.stopPropagation()}>
+      <div className="ai-chat-container" style={styles.chatContainer} onClick={(e) => e.stopPropagation()}>
         {/* Header */}
         <div style={styles.header}>
-          <h3 style={styles.title}>
+          <h3 className="ai-chat-title" style={styles.title}>
             Pregunta sobre {regionName || 'esta región'}
           </h3>
           <button style={styles.closeButton} onClick={onClose}>
@@ -113,9 +188,9 @@ export const AIChat: React.FC<AIChatProps> = ({
         </div>
 
         {/* Messages */}
-        <div style={styles.messagesContainer}>
+        <div className="ai-chat-messages" style={styles.messagesContainer}>
           {messages.length === 0 && (
-            <div style={styles.welcomeMessage}>
+            <div className="ai-chat-welcome" style={styles.welcomeMessage}>
               <p style={styles.welcomeText}>
                 ¡Hola! Soy tu asistente astronómico. Puedes preguntarme sobre:
               </p>
@@ -131,6 +206,7 @@ export const AIChat: React.FC<AIChatProps> = ({
           {messages.map((msg, idx) => (
             <div
               key={idx}
+              className="ai-chat-message"
               style={{
                 ...styles.message,
                 ...(msg.role === 'user' ? styles.userMessage : styles.assistantMessage),
@@ -141,7 +217,7 @@ export const AIChat: React.FC<AIChatProps> = ({
           ))}
           
           {loading && (
-            <div style={{ ...styles.message, ...styles.assistantMessage }}>
+            <div className="ai-chat-message" style={{ ...styles.message, ...styles.assistantMessage }}>
               <div style={styles.messageContent}>
                 <span style={styles.loadingDots}>●●●</span>
               </div>
@@ -155,6 +231,7 @@ export const AIChat: React.FC<AIChatProps> = ({
         <div style={styles.inputContainer}>
           <input
             type="text"
+            className="ai-chat-input"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={handleKeyPress}
@@ -163,6 +240,7 @@ export const AIChat: React.FC<AIChatProps> = ({
             disabled={loading}
           />
           <button
+            className="ai-chat-send-button"
             onClick={sendMessage}
             disabled={loading || !input.trim()}
             style={{

@@ -1,6 +1,11 @@
 import { z } from 'zod';
 import dotenv from 'dotenv';
+import path from 'path';
 
+// Cargar .env.server si existe, sino .env
+const envPath = path.resolve(process.cwd(), '.env.server');
+dotenv.config({ path: envPath });
+// Cargar también .env como fallback
 dotenv.config();
 
 const EnvSchema = z.object({

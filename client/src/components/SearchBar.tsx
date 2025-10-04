@@ -2,7 +2,7 @@
  * Barra de búsqueda unificada
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 interface SearchBarProps {
@@ -14,7 +14,34 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const [showHelp, setShowHelp] = useState(false);
+
+  // Añadir estilos responsive
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `
+      /* RESPONSIVE - SearchBar */
+      @media (max-width: 480px) {
+        .search-bar-input {
+          padding: 12px 16px !important;
+          font-size: 14px !important;
+        }
+
+        .search-bar-button {
+          padding: 8px 16px !important;
+          font-size: 13px !important;
+        }
+
+        .search-bar-help-button {
+          padding: 6px 10px !important;
+          font-size: 16px !important;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,7 +90,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
       <form onSubmit={handleSearch} style={styles.form}>
         <input
           type="text"
-          className="search-input"
+          className="search-bar-input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Buscar en Bug Lightyear..."
@@ -73,31 +100,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
 
         <button 
           type="submit" 
-          className="search-button"
+          className="search-bar-button"
           style={styles.button} 
           disabled={loading}
         >
           {loading ? '...' : '🔍'}
         </button>
       </form>
-      
-      {showHelp && (
-        <div style={styles.helpPanel}>
-          <h4 style={styles.helpTitle}>Ejemplos de Búsqueda</h4>
-          <div style={styles.helpContent}>
-            <p><strong>Nebulosas:</strong> M42, Crab Nebula, Eagle Nebula</p>
-            <p><strong>Estrellas:</strong> Betelgeuse, Sirius, Vega, Rigel</p>
-            <p><strong>Cúmulos:</strong> Pleiades, M13, M22</p>
-            <p><strong>Galaxias:</strong> M31, M51, Andromeda Galaxy</p>
-            <p><strong>Sistema Solar:</strong> Sistema Solar, Sol, Tierra, Luna</p>
-            <p><strong>Coordenadas:</strong> 17:45:40 -28:56:10</p>
-            <p style={styles.helpNote}>
-              <strong>Nota:</strong> Los términos del Sistema Solar redirigen a objetos educativos relacionados 
-              (formación planetaria, contexto galáctico, cúmulos estelares).
-            </p>
-          </div>
-        </div>
-      )}
       
       {error && <div style={styles.error}>{error}</div>}
       {success && <div style={styles.success}>{success}</div>}

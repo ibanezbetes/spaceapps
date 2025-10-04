@@ -39,6 +39,43 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
           opacity: 1;
         }
       }
+
+      /* RESPONSIVE - ClickPopup */
+      @media (max-width: 768px) {
+        .click-popup {
+          max-width: calc(100% - 32px) !important;
+          right: 16px !important;
+          bottom: 16px !important;
+          min-width: 280px !important;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .click-popup {
+          left: 8px !important;
+          right: 8px !important;
+          bottom: 8px !important;
+          min-width: auto !important;
+          max-width: none !important;
+        }
+
+        .click-popup-title {
+          font-size: 14px !important;
+        }
+
+        .click-popup-field {
+          font-size: 12px !important;
+        }
+
+        .click-popup-description {
+          font-size: 12px !important;
+        }
+
+        .click-popup-chat-button {
+          padding: 10px 14px !important;
+          font-size: 13px !important;
+        }
+      }
     `;
     document.head.appendChild(style);
     return () => {
@@ -72,10 +109,11 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
   return (
     <>
       <div
+        className="click-popup"
         style={styles.popup}
       >
         <div style={styles.header}>
-          <h4 style={styles.title}>
+          <h4 className="click-popup-title" style={styles.title}>
             {loading 
               ? 'Identificando región...' 
               : regionName 
@@ -89,31 +127,31 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
 
         <div style={styles.content}>
           {regionDescription && (
-            <div style={styles.description}>
+            <div className="click-popup-description" style={styles.description}>
               {regionDescription}
             </div>
           )}
 
           {regionDescription && <div style={styles.separator} />}
 
-          <div style={styles.field}>
+          <div className="click-popup-field" style={styles.field}>
             <span style={styles.label}>RA (decimal):</span>
             <span style={styles.value}>{ra.toFixed(6)}°</span>
           </div>
 
-          <div style={styles.field}>
+          <div className="click-popup-field" style={styles.field}>
             <span style={styles.label}>Dec (decimal):</span>
             <span style={styles.value}>{dec.toFixed(6)}°</span>
           </div>
 
           <div style={styles.separator} />
 
-          <div style={styles.field}>
+          <div className="click-popup-field" style={styles.field}>
             <span style={styles.label}>RA (HMS):</span>
             <span style={styles.value}>{coords.hms}</span>
           </div>
 
-          <div style={styles.field}>
+          <div className="click-popup-field" style={styles.field}>
             <span style={styles.label}>Dec (DMS):</span>
             <span style={styles.value}>{coords.dms}</span>
           </div>
@@ -123,6 +161,7 @@ export const ClickPopup: React.FC<ClickPopupProps> = ({
             <>
               <div style={styles.separator} />
               <button
+                className="click-popup-chat-button"
                 style={styles.chatButton}
                 onClick={() => setShowChat(true)}
               >
