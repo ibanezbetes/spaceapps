@@ -85,5 +85,5 @@ variable "s3_bucket_name" {
 variable "upload_frontend" {
   description = "Upload local client/dist contents to S3 website bucket"
   type        = bool
-  default     = true
+  default     = false
 }
