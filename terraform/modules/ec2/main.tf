@@ -29,35 +29,85 @@ locals {
   user_data = <<-EOT
               #!/bin/bash
               set -e
+              
+              # Log todo para debugging
+              exec > >(tee /var/log/user-data.log) 2>&1
+              echo "=== INICIANDO USER DATA SCRIPT ==="
+              date
+              
+              # Actualizar sistema
+              echo "Actualizando sistema..."
               yum update -y
-              yum install -y docker git
+              
+              # Instalar dependencias
+              echo "Instalando Docker y Git..."
+              yum install -y docker git curl
+              
+              # Configurar Docker
+              echo "Configurando Docker..."
               systemctl enable docker
               systemctl start docker
               usermod -a -G docker ec2-user
-
-              echo GEMINI_API_KEY=${var.gemini_api_key} >> /etc/environment
-              echo FRONTEND_URL=${var.frontend_url} >> /etc/environment
-
-              # Clonar repo y construir imagen si no se especifica docker_image
-              if [ -z "${var.docker_image}" ]; then
-                git clone https://github.com/ibanezbetes/spaceapps.git /opt/spaceapps
-                cd /opt/spaceapps
-                docker build -t bug-lightyear-explorer:latest .
-                IMAGE_TO_RUN=bug-lightyear-explorer:latest
-              else
-                docker pull ${var.docker_image}
-                IMAGE_TO_RUN=${var.docker_image}
-              fi
-
-              # Ejecutar contenedor
-              docker run -d --name bug-lightyear-app \
+              
+              # Esperar que Docker esté listo
+              echo "Esperando que Docker esté listo..."
+              sleep 10
+              
+              # Variables de entorno
+              echo "Configurando variables de entorno..."
+              echo "GEMINI_API_KEY=${var.gemini_api_key}" >> /etc/environment
+              echo "FRONTEND_URL=${var.frontend_url}" >> /etc/environment
+              echo "PORT=3000" >> /etc/environment
+              
+              # Clonar repositorio
+              echo "Clonando repositorio..."
+              git clone https://github.com/ibanezbetes/spaceapps.git /opt/spaceapps
+              cd /opt/spaceapps
+              
+              # Construir imagen Docker
+              echo "Construyendo imagen Docker..."
+              docker build -t milkyway-backend:latest .
+              
+              # Verificar que la imagen se construyó
+              docker images | grep milkyway-backend
+              
+              # Ejecutar contenedor backend
+              echo "Ejecutando contenedor backend..."
+              docker run -d \
+                --name milkyway-backend \
                 --restart unless-stopped \
-                -p 80:${var.app_port} \
-                -p ${var.app_port}:${var.app_port} \
-                -e GEMINI_API_KEY=${var.gemini_api_key} \
-                -e FRONTEND_URL=${var.frontend_url} \
-                ${IMAGE_TO_RUN}
-
+                -p 3000:3000 \
+                -e GEMINI_API_KEY="${var.gemini_api_key}" \
+                -e FRONTEND_URL="${var.frontend_url}" \
+                -e PORT=3000 \
+                -e NODE_ENV=production \
+                milkyway-backend:latest
+              
+              # Verificar que el contenedor está corriendo
+              echo "Verificando estado del contenedor..."
+              docker ps -a
+              docker logs milkyway-backend
+              
+              # Crear script de health check
+              cat > /opt/health-check.sh << 'HEALTH_EOF'
+              #!/bin/bash
+              echo "=== HEALTH CHECK $(date) ==="
+              echo "Docker status:"
+              systemctl status docker --no-pager
+              echo "Container status:"
+              docker ps -a
+              echo "Backend logs (últimas 20 líneas):"
+              docker logs --tail 20 milkyway-backend 2>/dev/null || echo "No logs available"
+              echo "Network test:"
+              curl -s http://localhost:3000/health || echo "Health endpoint not responding"
+              echo "=========================="
+              HEALTH_EOF
+              
+              chmod +x /opt/health-check.sh
+              
+              echo "=== USER DATA SCRIPT COMPLETADO ==="
+              date
+              
               EOT
 }
 

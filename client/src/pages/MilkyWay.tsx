@@ -371,7 +371,7 @@ export const MilkyWay: React.FC = () => {
           ra: clickRa,
           dec: clickDec,
         },
-        timeout: 8000,
+        timeout: 5000, // Reducido a 5 segundos
       });
 
       // Actualizar popup con la región encontrada
@@ -386,7 +386,50 @@ export const MilkyWay: React.FC = () => {
           loading: false,
         });
       } else {
-        // Fallback (no debería ocurrir ya que siempre hay una región)
+        // Fallback: usar datos estáticos
+        const { findAstronomicalRegion } = await import('../data/astronomicalRegions');
+        const region = findAstronomicalRegion(clickRa, clickDec);
+        
+        setClickPopup({
+          visible: true,
+          ra: clickRa,
+          dec: clickDec,
+          regionName: region?.name,
+          regionDescription: region?.description,
+          regionIcon: region?.icon,
+          loading: false,
+        });
+      }
+    } catch (error) {
+      console.log('[CLICK] Backend no disponible, usando datos estáticos');
+      
+      // Fallback: usar datos estáticos de regiones astronómicas
+      try {
+        const { findAstronomicalRegion } = await import('../data/astronomicalRegions');
+        const region = findAstronomicalRegion(clickRa, clickDec);
+        
+        if (region) {
+          setClickPopup({
+            visible: true,
+            ra: clickRa,
+            dec: clickDec,
+            regionName: region.name,
+            regionDescription: region.description,
+            regionIcon: region.icon,
+            loading: false,
+          });
+        } else {
+          // Si no se encuentra región, mostrar solo coordenadas
+          setClickPopup({
+            visible: true,
+            ra: clickRa,
+            dec: clickDec,
+            loading: false,
+          });
+        }
+      } catch (fallbackError) {
+        console.error('[CLICK] Error en fallback:', fallbackError);
+        // Último recurso: solo coordenadas
         setClickPopup({
           visible: true,
           ra: clickRa,
@@ -394,15 +437,6 @@ export const MilkyWay: React.FC = () => {
           loading: false,
         });
       }
-    } catch (error) {
-      console.log('[CLICK] Error buscando región, mostrando solo coordenadas');
-      // Error - mostrar solo coordenadas
-      setClickPopup({
-        visible: true,
-        ra: clickRa,
-        dec: clickDec,
-        loading: false,
-      });
     }
   };
 
